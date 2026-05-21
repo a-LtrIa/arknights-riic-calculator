@@ -1,0 +1,2933 @@
+{
+  "Castle-3": {
+    "name": "Castle-3",
+    "skills": [
+      {
+        "condition": "精英0 30级",
+        "skill_name": "作战指导录像",
+        "description": "进驻制造站时，作战记录类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 30,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "Miss.Christine": {
+    "name": "Miss.Christine",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "午休好去处",
+        "description": "进驻制造站时，仓库容量上限+10，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 10,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "盛餐的回报",
+        "description": "进驻制造站时，当与酒神在同一个制造站时，作战记录类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 30,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [
+      "仓库容量+10"
+    ],
+    "max_productivity": 30
+  },
+  "克洛丝": {
+    "name": "克洛丝",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "慢性子",
+        "description": "进驻制造站后，生产力首小时+15%，此后每小时+2%，最终达到+25%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 2,
+    "notes": [],
+    "max_productivity": 15
+  },
+  "冬时": {
+    "name": "冬时",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "科学改造",
+        "description": "进驻制造站时，当前制造站内其他干员提供的生产力全部归零（不包含根据设施数量提供加成的生产力），每个当前制造站内干员为当前制造站仓库容量上限+5",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 5,
+          "mood_reduce": 0,
+          "special": [
+            "reset_others"
+          ]
+        }
+      },
+      {
+        "condition": "精英1",
+        "skill_name": "流程优化",
+        "description": "进驻制造站时，当前制造站内其他干员提供的生产力全部归零（不包含根据设施数量提供加成的生产力），每个当前制造站内干员为当前制造站+10%生产力，仓库容量上限+5",
+        "bonuses": {
+          "productivity": 10,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 5,
+          "mood_reduce": 0,
+          "special": [
+            "reset_others"
+          ]
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "注意：会清空其他干员生产力加成",
+      "仓库容量+5",
+      "注意：会清空其他干员生产力加成",
+      "仓库容量+5"
+    ],
+    "max_productivity": 10
+  },
+  "刻俄柏": {
+    "name": "刻俄柏",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "“都想要”",
+        "description": "进驻制造站时，仓库容量上限+8，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 8,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "“等不及”",
+        "description": "进驻制造站后，生产力首小时+20%，此后每小时+1%，最终达到+25%",
+        "bonuses": {
+          "productivity": 20,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 3,
+    "notes": [
+      "仓库容量+8"
+    ],
+    "max_productivity": 20
+  },
+  "卡缇": {
+    "name": "卡缇",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "仓库整备·α",
+        "description": "进驻制造站时，仓库容量上限+6，生产力+10%",
+        "bonuses": {
+          "productivity": 10,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 6,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+6"
+    ],
+    "max_productivity": 10
+  },
+  "卡达": {
+    "name": "卡达",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "Vlog",
+        "description": "进驻制造站时，生产作战记录类配方时，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英1",
+        "skill_name": "剪辑·β",
+        "description": "进驻制造站时，生产作战记录类配方时，仓库容量上限+15",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 15,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+15"
+    ],
+    "max_productivity": 0
+  },
+  "历阵锐枪芬": {
+    "name": "历阵锐枪芬",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "标准化·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "重聚时光",
+        "description": "进驻制造站时，当前制造站内每个A1小队术语:A1小队包含以下干员芙蓉、炎熔、米格鲁、芬、克洛丝干员为自身+10%的生产力",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 2,
+    "notes": [],
+    "max_productivity": 15
+  },
+  "史都华德": {
+    "name": "史都华德",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "标准化·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "圣约送葬人": {
+    "name": "圣约送葬人",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "公证所教习·α",
+        "description": "进驻制造站时，作战记录类配方的生产力+20%",
+        "bonuses": {
+          "productivity": 20,
+          "gold_bonus": 0,
+          "exp_bonus": 20,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "公证所教习·β",
+        "description": "进驻制造站时，作战记录类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 30,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "合理利用",
+        "description": "进驻制造站时，生产作战记录类配方时，仓库容量上限+4",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 4,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [
+      "仓库容量+4"
+    ],
+    "max_productivity": 30
+  },
+  "地灵": {
+    "name": "地灵",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "地质学·β",
+        "description": "进驻制造站时，源石类配方的生产力+35%",
+        "bonuses": {
+          "productivity": 35,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 35
+  },
+  "多萝西": {
+    "name": "多萝西",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "源石技艺理论应用",
+        "description": "进驻制造站时，当前制造站内每个莱茵科技类技能术语:莱茵科技类技能包含以下技能莱茵科技·α、莱茵科技·β、莱茵科技·γ为自身+5%的生产力",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "莱茵科技·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "夜刀": {
+    "name": "夜刀",
+    "skills": [
+      {
+        "condition": "精英0 30级",
+        "skill_name": "标准化·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 2,
+    "notes": [],
+    "max_productivity": 15
+  },
+  "夜烟": {
+    "name": "夜烟",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "金属工艺·α",
+        "description": "进驻制造站时，贵金属类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 30,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "娜仁图亚": {
+    "name": "娜仁图亚",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "无畏豪情",
+        "description": "进驻制造站时，仓库容量上限+10，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 10,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "齐心沙盗",
+        "description": "进驻制造站时，每间宿舍每级为贵金属类配方的生产力+1%",
+        "bonuses": {
+          "productivity": 1,
+          "gold_bonus": 1,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+10"
+    ],
+    "max_productivity": 1
+  },
+  "娜斯提": {
+    "name": "娜斯提",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "莱茵科技·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "造价高昂",
+        "description": "进驻制造站时，基建内（不包含副手及活动室使用者）每有1名莱茵生命术语:莱茵生命包含以下干员赫默、伊芙利特、塞雷娅、白面鸮、梅尔、麦哲伦、多萝西、星源、缪尔赛思、娜斯提干员（最多5名），贵金属类配方的生产力+3%",
+        "bonuses": {
+          "productivity": 3,
+          "gold_bonus": 3,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "导火索": {
+    "name": "导火索",
+    "skills": [
+      {
+        "condition": "精英2",
+        "skill_name": "实干的寡言者",
+        "description": "进驻制造站时，生产力+20%，每有1瓶乌萨斯特饮术语:乌萨斯特饮由以下干员提供战车，则仓库容量上限+2",
+        "bonuses": {
+          "productivity": 20,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 2,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 3,
+    "notes": [
+      "仓库容量+2"
+    ],
+    "max_productivity": 20
+  },
+  "帕拉斯": {
+    "name": "帕拉斯",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "智慧之境",
+        "description": "进驻制造站时，仓库容量上限+8，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 8,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "胜利之计",
+        "description": "进驻制造站时，作战记录类配方的生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 25,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 4,
+    "notes": [
+      "仓库容量+8"
+    ],
+    "max_productivity": 25
+  },
+  "异客": {
+    "name": "异客",
+    "skills": [
+      {
+        "condition": "精英2",
+        "skill_name": "自动化·α",
+        "description": "进驻制造站时，当前制造站内其他干员提供的生产力全部归零（不包含根据设施数量提供加成的生产力），每个发电站为当前制造站+5%的生产力",
+        "bonuses": {
+          "productivity": 5,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": [
+            "reset_others"
+          ]
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "注意：会清空其他干员生产力加成"
+    ],
+    "max_productivity": 5
+  },
+  "弑君者": {
+    "name": "弑君者",
+    "skills": [
+      {
+        "condition": "精英2",
+        "skill_name": "逆境荣光",
+        "description": "进驻制造站时，作战记录类配方的生产力+35%",
+        "bonuses": {
+          "productivity": 35,
+          "gold_bonus": 0,
+          "exp_bonus": 35,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 35
+  },
+  "引星棘刺": {
+    "name": "引星棘刺",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "金属工艺·α",
+        "description": "进驻制造站时，贵金属类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 30,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "原质塑金副产物",
+        "description": "进驻制造站时，每个贸易站为当前制造站贵金属类配方的生产力+3%",
+        "bonuses": {
+          "productivity": 3,
+          "gold_bonus": 3,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "怒潮凛冬": {
+    "name": "怒潮凛冬",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "战阵领袖",
+        "description": "进驻制造站时，作战记录类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 30,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "情同手足",
+        "description": "进驻制造站时，作战记录类配方的生产力+30%，当与乌萨斯学生自治团术语:乌萨斯学生自治团包含以下干员早露、凛冬、真理、古米、烈夏、苦艾干员在同一个制造站时，作战记录类配方的生产力额外+10%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 30,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "截云": {
+    "name": "截云",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "古老巫术",
+        "description": "进驻制造站时，每5点人间烟火术语:人间烟火可影响巫术结晶相关技能由以下干员的基建技能提供夕、令、重岳、乌有、桑葚转化为1点巫术结晶术语:巫术结晶拥有该基建技能的干员截云",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英0",
+        "skill_name": "逐水草",
+        "description": "进驻制造站时，每1点巫术结晶术语:巫术结晶拥有该基建技能的干员截云+1%生产力",
+        "bonuses": {
+          "productivity": 1,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "问枯荣",
+        "description": "进驻制造站时，每1点巫术结晶术语:巫术结晶拥有该基建技能的干员截云+2%生产力",
+        "bonuses": {
+          "productivity": 2,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [],
+    "max_productivity": 2
+  },
+  "掠风": {
+    "name": "掠风",
+    "skills": [
+      {
+        "condition": "精英2",
+        "skill_name": "自动化·α",
+        "description": "进驻制造站时，当前制造站内其他干员提供的生产力全部归零（不包含根据设施数量提供加成的生产力），每个发电站为当前制造站+5%的生产力",
+        "bonuses": {
+          "productivity": 5,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": [
+            "reset_others"
+          ]
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "注意：会清空其他干员生产力加成"
+    ],
+    "max_productivity": 5
+  },
+  "斑点": {
+    "name": "斑点",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "金属工艺·α",
+        "description": "进驻制造站时，贵金属类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 30,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "断罪者": {
+    "name": "断罪者",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "拳术指导录像",
+        "description": "进驻制造站时，作战记录类配方的生产力+35%",
+        "bonuses": {
+          "productivity": 35,
+          "gold_bonus": 0,
+          "exp_bonus": 35,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 35
+  },
+  "星源": {
+    "name": "星源",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "莱茵科技·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "莱茵科技·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "月见夜": {
+    "name": "月见夜",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "源石工艺·α",
+        "description": "进驻制造站时，源石类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "杏仁": {
+    "name": "杏仁",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "小奇思",
+        "description": "进驻制造站时，贵金属类配方的生产力+25%，心情每小时消耗+0.25",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 25,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "挑大梁",
+        "description": "进驻制造站时，基建内（不包含副手及活动室使用者）每有1名黑钢国际术语:黑钢国际包含以下干员雷蛇、芙兰卡、杰西卡、香草、杏仁、寻澜干员（最多3名），贵金属类配方的生产力+2%，心情每小时消耗-0.15",
+        "bonuses": {
+          "productivity": 2,
+          "gold_bonus": 2,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0.15,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "杰西卡": {
+    "name": "杰西卡",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "标准化·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "梅尔": {
+    "name": "梅尔",
+    "skills": [
+      {
+        "condition": "精英2",
+        "skill_name": "咪波·制造型",
+        "description": "进驻制造站时，生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "森蚺": {
+    "name": "森蚺",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "自动化·α",
+        "description": "进驻制造站时，当前制造站内其他干员提供的生产力全部归零（不包含根据设施数量提供加成的生产力），每个发电站为当前制造站+5%的生产力",
+        "bonuses": {
+          "productivity": 5,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": [
+            "reset_others"
+          ]
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "自动化·β",
+        "description": "进驻制造站时，当前制造站内其他干员提供的生产力全部归零（不包含根据设施数量提供加成的生产力），每个发电站为当前制造站+10%的生产力",
+        "bonuses": {
+          "productivity": 10,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": [
+            "reset_others"
+          ]
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "注意：会清空其他干员生产力加成",
+      "注意：会清空其他干员生产力加成"
+    ],
+    "max_productivity": 10
+  },
+  "槐琥": {
+    "name": "槐琥",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "团队精神",
+        "description": "进驻制造站时，消除当前制造站内所有干员自身心情消耗的影响",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "配合意识",
+        "description": "进驻制造站时，当前制造站内其他干员提供的每5%生产力（不包含根据设施数量提供加成的生产力），额外提供5%生产力，最多提供40%生产力",
+        "bonuses": {
+          "productivity": 5,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [],
+    "max_productivity": 5
+  },
+  "水月": {
+    "name": "水月",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "意识协议",
+        "description": "进驻制造站时，当前制造站内每个标准化类技能术语:标准化类技能包含以下技能标准化·α、标准化·β为自身+5%的生产力",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "标准化·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "泡普卡": {
+    "name": "泡普卡",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "麻烦制造者",
+        "description": "进驻制造站时，生产力+25%，仓库容量上限-12，心情每小时消耗+0.25",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "泡泡": {
+    "name": "泡泡",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "囤积者",
+        "description": "进驻制造站时，仓库容量上限+10，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 10,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英1",
+        "skill_name": "大就是好！",
+        "description": "进驻制造站时，当前制造站内干员根据自身提升的仓库容量提供一定的生产力。提升16格以下的，每格仓库容量提供1%生产力；提升大于16格的，每格仓库容量提供3%生产力（无法与回收利用术语:回收利用拥有该基建技能的干员红云叠加，且优先生效）",
+        "bonuses": {
+          "productivity": 1,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+10"
+    ],
+    "max_productivity": 1
+  },
+  "泰拉大陆调查团": {
+    "name": "泰拉大陆调查团",
+    "skills": [
+      {
+        "condition": "精英0 30级",
+        "skill_name": "可靠的随从们",
+        "description": "进驻制造站时，仓库容量上限+8，生产力+5%，同时每有1个木天蓼术语:木天蓼可影响可爱的艾露猫、可靠的随从们相关技能由以下干员的基建技能提供火龙S黑角、麒麟R夜刀，则生产力+1%",
+        "bonuses": {
+          "productivity": 5,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 8,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+8"
+    ],
+    "max_productivity": 5
+  },
+  "洋灰": {
+    "name": "洋灰",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "标准化·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "掘进工程",
+        "description": "进驻制造站时，仓库容量上限+10，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 10,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 2,
+    "notes": [
+      "仓库容量+10"
+    ],
+    "max_productivity": 15
+  },
+  "流星": {
+    "name": "流星",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "标准化·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 2,
+    "notes": [],
+    "max_productivity": 15
+  },
+  "海沫": {
+    "name": "海沫",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "意识兼容",
+        "description": "进驻制造站时，当前制造站内所有莱茵科技类术语:莱茵科技类包含以下技能莱茵科技·α、莱茵科技·β、莱茵科技·γ、红松骑士团类术语:红松骑士团类包含以下技能红松骑士团·α、红松骑士团·β技能也全都视作标准化类技能",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": [
+            "red_pine_knights"
+          ]
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "标准化·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "淬羽赫默": {
+    "name": "淬羽赫默",
+    "skills": [
+      {
+        "condition": "精英2",
+        "skill_name": "莱茵科技·γ",
+        "description": "进驻制造站时，生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "清流": {
+    "name": "清流",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "再生能源",
+        "description": "进驻制造站时，每个贸易站为当前制造站贵金属类配方的生产力+20%",
+        "bonuses": {
+          "productivity": 20,
+          "gold_bonus": 20,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 3,
+    "notes": [],
+    "max_productivity": 20
+  },
+  "清道夫": {
+    "name": "清道夫",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "拾荒者",
+        "description": "进驻制造站时，仓库容量上限+8，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 8,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+8"
+    ],
+    "max_productivity": 0
+  },
+  "温米": {
+    "name": "温米",
+    "skills": [
+      {
+        "condition": "精英2",
+        "skill_name": "金属工艺·α",
+        "description": "进驻制造站时，贵金属类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 30,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "温蒂": {
+    "name": "温蒂",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "自动化·β",
+        "description": "进驻制造站时，当前制造站内其他干员提供的生产力全部归零（不包含根据设施数量提供加成的生产力），每个发电站为当前制造站+10%的生产力",
+        "bonuses": {
+          "productivity": 10,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": [
+            "reset_others"
+          ]
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "仿生海龙",
+        "description": "进驻制造站时，当前制造站内其他干员提供的生产力全部归零（不包含根据设施数量提供加成的生产力），每个发电站为当前制造站+15%的生产力",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": [
+            "reset_others"
+          ]
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 2,
+    "notes": [
+      "注意：会清空其他干员生产力加成",
+      "注意：会清空其他干员生产力加成"
+    ],
+    "max_productivity": 15
+  },
+  "溯光星源": {
+    "name": "溯光星源",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "勘探背包",
+        "description": "进驻制造站时，当前制造站内每个莱茵科技类术语:莱茵科技类包含以下技能莱茵科技·α、莱茵科技·β、莱茵科技·γ技能为自身+5的仓库上限容量",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "莱茵科技·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "火神": {
+    "name": "火神",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "工匠精神·α",
+        "description": "进驻制造站时，生产力-5%，仓库容量上限+16，心情每小时消耗-0.15",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 16,
+          "mood_reduce": 0.15,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "工匠精神·β",
+        "description": "进驻制造站时，生产力-5%，仓库容量上限+19，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 19,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+16",
+      "仓库容量+19"
+    ],
+    "max_productivity": 0
+  },
+  "灰毫": {
+    "name": "灰毫",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "红松骑士团·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "红松骑士团·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "炎熔": {
+    "name": "炎熔",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "源石工艺·β",
+        "description": "进驻制造站时，源石类配方的生产力+35%",
+        "bonuses": {
+          "productivity": 35,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 35
+  },
+  "烈夏": {
+    "name": "烈夏",
+    "skills": [
+      {
+        "condition": "精英2",
+        "skill_name": "患难拍档",
+        "description": "进驻制造站时，若古米在贸易站，则作战记录类配方的生产力+35%",
+        "bonuses": {
+          "productivity": 35,
+          "gold_bonus": 0,
+          "exp_bonus": 35,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 35
+  },
+  "玛露西尔": {
+    "name": "玛露西尔",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "差遣使魔·α",
+        "description": "进驻制造站时，生产力+20%",
+        "bonuses": {
+          "productivity": 20,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "差遣使魔·β",
+        "description": "进驻制造站时，生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "意想不到的美味",
+        "description": "进驻制造站时，每1点魔物料理术语:魔物料理由以下干员的基建技能提供森西+1%生产力",
+        "bonuses": {
+          "productivity": 1,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "白雪": {
+    "name": "白雪",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "作战指导录像",
+        "description": "进驻制造站时，作战记录类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 30,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "白面鸮": {
+    "name": "白面鸮",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "莱茵科技·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "莱茵科技·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "石棉": {
+    "name": "石棉",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "特立独行",
+        "description": "进驻制造站时，生产力+25%，仓库容量上限-12，心情每小时消耗+0.25",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "探险者",
+        "description": "进驻制造站时，仓库容量上限+16，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 16,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [
+      "仓库容量+16"
+    ],
+    "max_productivity": 25
+  },
+  "石英": {
+    "name": "石英",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "标准化·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 2,
+    "notes": [],
+    "max_productivity": 15
+  },
+  "砾": {
+    "name": "砾",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "金属工艺·β",
+        "description": "进驻制造站时，贵金属类配方的生产力+35%",
+        "bonuses": {
+          "productivity": 35,
+          "gold_bonus": 35,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 35
+  },
+  "稀音": {
+    "name": "稀音",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "延时摄影",
+        "description": "进驻制造站后，生产力首小时+15%，此后每小时+2%，最终达到+25%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "剪辑·α",
+        "description": "进驻制造站时，生产作战记录类配方时，仓库容量上限+12",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 12,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 2,
+    "notes": [
+      "仓库容量+12"
+    ],
+    "max_productivity": 15
+  },
+  "米格鲁": {
+    "name": "米格鲁",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "仓库整备·α",
+        "description": "进驻制造站时，仓库容量上限+6，生产力+10%",
+        "bonuses": {
+          "productivity": 10,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 6,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+6"
+    ],
+    "max_productivity": 10
+  },
+  "红云": {
+    "name": "红云",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "拾荒者",
+        "description": "进驻制造站时，仓库容量上限+8，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 8,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英1",
+        "skill_name": "回收利用",
+        "description": "进驻制造站时，当前制造站内干员提升的每格仓库容量，提供2%生产力",
+        "bonuses": {
+          "productivity": 2,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+8"
+    ],
+    "max_productivity": 2
+  },
+  "红豆": {
+    "name": "红豆",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "作战指导录像",
+        "description": "进驻制造站时，作战记录类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 30,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "维伊": {
+    "name": "维伊",
+    "skills": [
+      {
+        "condition": "精英2",
+        "skill_name": "手艺人",
+        "description": "进驻制造站时，训练室每级为当前制造站+10%生产力，最多30%",
+        "bonuses": {
+          "productivity": 10,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [],
+    "max_productivity": 10
+  },
+  "罗比菈塔": {
+    "name": "罗比菈塔",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "标准化·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "至简": {
+    "name": "至简",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "绘图设计",
+        "description": "进驻制造站时，基建内除活动室外每间设施每级+1个工程机器人术语: 工程机器人由以下干员的基建技能提供至简，上限64个",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英0",
+        "skill_name": "机械辅助·α",
+        "description": "进驻制造站时，每16个工程机器人术语: 工程机器人由以下干员的基建技能提供至简+5%生产力",
+        "bonuses": {
+          "productivity": 5,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "机械辅助·β",
+        "description": "进驻制造站时，每8个工程机器人术语: 工程机器人由以下干员的基建技能提供至简+5%生产力",
+        "bonuses": {
+          "productivity": 5,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [],
+    "max_productivity": 5
+  },
+  "艾雅法拉": {
+    "name": "艾雅法拉",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "火山学家",
+        "description": "进驻制造站时，源石类配方的生产力+35%",
+        "bonuses": {
+          "productivity": 35,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 35
+  },
+  "芬": {
+    "name": "芬",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "急性子",
+        "description": "进驻制造站后，生产力首小时+20%，此后每小时+1%，最终达到+25%",
+        "bonuses": {
+          "productivity": 20,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 3,
+    "notes": [],
+    "max_productivity": 20
+  },
+  "苍苔": {
+    "name": "苍苔",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "金属工艺·α",
+        "description": "进驻制造站时，贵金属类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 30,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "打工心得",
+        "description": "进驻制造站时，当前制造站内每个金属工艺类技能术语:金属工艺类技能包含以下技能金属工艺·α、金属工艺·β为自身+5%的生产力",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": [
+            "metal_craft"
+          ]
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "薄绿": {
+    "name": "薄绿",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "地质学·α",
+        "description": "进驻制造站时，源石类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "蛇屠箱": {
+    "name": "蛇屠箱",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "仓库整备·β",
+        "description": "进驻制造站时，仓库容量上限+10，生产力+10%",
+        "bonuses": {
+          "productivity": 10,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 10,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+10"
+    ],
+    "max_productivity": 10
+  },
+  "裁度": {
+    "name": "裁度",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "量体裁衣",
+        "description": "进驻制造站时，生产力+20%，心情每小时消耗+0.25",
+        "bonuses": {
+          "productivity": 20,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "得心应手",
+        "description": "进驻制造站时，生产力+25%，仓库容量上限+6",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 6,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [
+      "仓库容量+6"
+    ],
+    "max_productivity": 25
+  },
+  "裂响": {
+    "name": "裂响",
+    "skills": [
+      {
+        "condition": "精英2",
+        "skill_name": "“连轴转”",
+        "description": "进驻制造站时，作战记录类配方的生产力+35%，心情每小时消耗+0.25",
+        "bonuses": {
+          "productivity": 35,
+          "gold_bonus": 0,
+          "exp_bonus": 35,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 35
+  },
+  "褐果": {
+    "name": "褐果",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "标准化·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英1",
+        "skill_name": "地质学·α",
+        "description": "进驻制造站时，源石类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "调香师": {
+    "name": "调香师",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "标准化·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "豆苗": {
+    "name": "豆苗",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "磐蟹·豆豆",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英1",
+        "skill_name": "磐蟹·阿盘",
+        "description": "进驻制造站时，仓库容量上限+8，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 8,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 2,
+    "notes": [
+      "仓库容量+8"
+    ],
+    "max_productivity": 15
+  },
+  "贝娜": {
+    "name": "贝娜",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "“可靠”助手",
+        "description": "进驻制造站时，生产力-20%，仓库容量上限+17，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 17,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+17"
+    ],
+    "max_productivity": 0
+  },
+  "赫默": {
+    "name": "赫默",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "莱茵科技·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "莱茵科技·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "远牙": {
+    "name": "远牙",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "红松骑士团·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "红松骑士团·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "迷迭香": {
+    "name": "迷迭香",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "超感",
+        "description": "进驻制造站时，宿舍内每有1名干员则感知信息术语:感知信息可影响思维链环、无声共鸣相关变量由以下干员的基建技能提供迷迭香、黑键、夕、令、絮雨、爱丽丝、车尔尼+1，同时每1点感知信息术语:感知信息可影响思维链环、无声共鸣相关变量由以下干员的基建技能提供迷迭香、黑键、夕、令、絮雨、爱丽丝、车尔尼转化为1点思维链环术语:思维链环可影响念力、意识实体相关技能由以下干员的基建技能提供迷迭香",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英0",
+        "skill_name": "念力",
+        "description": "进驻制造站时，每2点思维链环术语:思维链环可影响念力、意识实体相关技能由以下干员的基建技能提供迷迭香+1%生产力",
+        "bonuses": {
+          "productivity": 1,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "意识实体",
+        "description": "进驻制造站时，每1点思维链环术语:思维链环可影响念力、意识实体相关技能由以下干员的基建技能提供迷迭香+1%生产力",
+        "bonuses": {
+          "productivity": 1,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [],
+    "max_productivity": 1
+  },
+  "酒神": {
+    "name": "酒神",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "镜中影",
+        "description": "进驻制造站时，作战记录类配方的生产力+20%，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 20,
+          "gold_bonus": 0,
+          "exp_bonus": 20,
+          "warehouse": 0,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "戏中人",
+        "description": "进驻制造站时，作战记录类配方的生产力+35%，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 35,
+          "gold_bonus": 0,
+          "exp_bonus": 35,
+          "warehouse": 0,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 35
+  },
+  "野鬃": {
+    "name": "野鬃",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "红松骑士团·α",
+        "description": "进驻制造站时，生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "红松骑士团·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "钼铅": {
+    "name": "钼铅",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "行动派",
+        "description": "进驻制造站时，生产力+20%，仓库容量上限-8",
+        "bonuses": {
+          "productivity": 20,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "收纳达人",
+        "description": "进驻制造站时，仓库容量上限+16，心情每小时消耗-0.25",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 16,
+          "mood_reduce": 0.25,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 3,
+    "notes": [
+      "仓库容量+16"
+    ],
+    "max_productivity": 20
+  },
+  "铅踝": {
+    "name": "铅踝",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "模糊视线",
+        "description": "进驻制造站时，生产力+30%，自身每有4点心情落差术语:心情落差干员自身心情上限与当前心情值的差值，生产力-5%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英1",
+        "skill_name": "窗外雪啸",
+        "description": "进驻制造站时，当自身心情落差术语:心情落差干员自身心情上限与当前心情值的差值大于12时，生产力+10%，仓库容量+6",
+        "bonuses": {
+          "productivity": 10,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "锡兰": {
+    "name": "锡兰",
+    "skills": [
+      {
+        "condition": "精英2",
+        "skill_name": "源石研究",
+        "description": "进驻制造站时，源石类配方的生产力+35%",
+        "bonuses": {
+          "productivity": 35,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 35
+  },
+  "阿兰娜": {
+    "name": "阿兰娜",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "机械精通·α",
+        "description": "进驻制造站时，每有1台作业平台术语:作业平台包含以下干员Lancet-2、Castle-3、THRM-EX、正义骑士号、Friston-3、PhonoR-0、CONFESS-47进驻发电站，贵金属类配方的生产力+5%",
+        "bonuses": {
+          "productivity": 5,
+          "gold_bonus": 5,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "机械精通·β",
+        "description": "进驻制造站时，每有1台作业平台术语:作业平台包含以下干员Lancet-2、Castle-3、THRM-EX、正义骑士号、Friston-3、PhonoR-0、CONFESS-47进驻发电站，贵金属类配方的生产力+10%",
+        "bonuses": {
+          "productivity": 10,
+          "gold_bonus": 10,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "“搭把手！”",
+        "description": "进驻制造站时，当与温米在同一个制造站时，贵金属类配方的生产力+15%",
+        "bonuses": {
+          "productivity": 15,
+          "gold_bonus": 15,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 2,
+    "notes": [],
+    "max_productivity": 15
+  },
+  "阿罗玛": {
+    "name": "阿罗玛",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "净味香氛",
+        "description": "进驻制造站时，贵金属类配方的生产力+25%，心情每小时消耗+0.25",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 25,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "例行清扫",
+        "description": "进驻制造站后，生产力每小时+2%，最终达到+20%",
+        "bonuses": {
+          "productivity": 2,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "赤金"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "雪猎": {
+    "name": "雪猎",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "虔信",
+        "description": "进驻制造站时，生产力+20%，心情每小时消耗+0.25",
+        "bonuses": {
+          "productivity": 20,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "独当一面",
+        "description": "进驻制造站时，生产力+30%，心情每小时消耗+0.25",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "霜叶": {
+    "name": "霜叶",
+    "skills": [
+      {
+        "condition": "精英1",
+        "skill_name": "作战指导录像",
+        "description": "进驻制造站时，作战记录类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 30,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 30
+  },
+  "食铁兽": {
+    "name": "食铁兽",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "作战指导录像",
+        "description": "进驻制造站时，作战记录类配方的生产力+30%",
+        "bonuses": {
+          "productivity": 30,
+          "gold_bonus": 0,
+          "exp_bonus": 30,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "拳术指导录像",
+        "description": "进驻制造站时，作战记录类配方的生产力+35%",
+        "bonuses": {
+          "productivity": 35,
+          "gold_bonus": 0,
+          "exp_bonus": 35,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "作战记录"
+    ],
+    "efficiency_rating": 5,
+    "notes": [],
+    "max_productivity": 35
+  },
+  "香草": {
+    "name": "香草",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "标准化·β",
+        "description": "进驻制造站时，生产力+25%",
+        "bonuses": {
+          "productivity": 25,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 4,
+    "notes": [],
+    "max_productivity": 25
+  },
+  "黍": {
+    "name": "黍",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "春雷响，万物长",
+        "description": "进驻制造站时，当前制造站内所有干员心情每小时消耗-0.1",
+        "bonuses": {
+          "productivity": 0,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0.1,
+          "special": []
+        }
+      },
+      {
+        "condition": "精英2",
+        "skill_name": "稻禾厚，顺秋收",
+        "description": "进驻制造站时，每3点人间烟火术语:人间烟火可影响巫术结晶相关技能由以下干员的基建技能提供夕、令、重岳、乌有、桑葚+1%生产力",
+        "bonuses": {
+          "productivity": 1,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 0,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [],
+    "max_productivity": 1
+  },
+  "黑角": {
+    "name": "黑角",
+    "skills": [
+      {
+        "condition": "精英0",
+        "skill_name": "仓库整备·β",
+        "description": "进驻制造站时，仓库容量上限+10，生产力+10%",
+        "bonuses": {
+          "productivity": 10,
+          "gold_bonus": 0,
+          "exp_bonus": 0,
+          "warehouse": 10,
+          "mood_reduce": 0,
+          "special": []
+        }
+      }
+    ],
+    "best_for": [
+      "通用"
+    ],
+    "efficiency_rating": 1,
+    "notes": [
+      "仓库容量+10"
+    ],
+    "max_productivity": 10
+  }
+}
