@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@theme {
+  --color-base-900: #0d0d0d;
+  --color-base-800: #1a1a1a;
+  --color-base-700: #2a2a2a;
+  --color-base-600: #3a3a3a;
+  --color-base-500: #4a4a4a;
+  --color-base-400: #6b7280;
+  --color-base-300: #9ca3af;
+  --color-base-200: #d1d5db;
+  --color-base-100: #f3f4f6;
+
+  --color-trade: #3b82f6;
+  --color-trade-light: #60a5fa;
+  --color-trade-dark: #1d4ed8;
+  --color-manufacturing: #eab308;
+  --color-manufacturing-light: #fde047;
+  --color-manufacturing-dark: #a16207;
+  --color-power: #22c55e;
+  --color-power-light: #4ade80;
+  --color-power-dark: #15803d;
+  --color-control: #f97316;
+  --color-control-light: #fb923c;
+  --color-control-dark: #c2410c;
+  --color-dormitory: #8b5cf6;
+  --color-dormitory-light: #a78bfa;
+  --color-dormitory-dark: #6d28d9;
+  --color-meeting: #ec4899;
+  --color-meeting-light: #f472b6;
+  --color-workshop: #14b8a6;
+  --color-office: #6366f1;
+  --color-training: #ef4444;
+
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: #0d0d0d;
+    color: #d1d5db;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1a1a1a;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #3a3a3a;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #4a4a4a;
+  }
+}
