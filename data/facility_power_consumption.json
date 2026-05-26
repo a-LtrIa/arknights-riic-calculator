@@ -1,0 +1,114 @@
+{
+  "data_source": "arknights-riic-guide.md",
+  "note": "仅记录文件中明确列出的电力数据；未明确的设施标注为 null。发电站为供电设施，数值为供电量（正值），其余设施为消耗电力。",
+  "facilities": {
+    "发电站": {
+      "type": "供电",
+      "max_level": 3,
+      "max_count": 3,
+      "power": {
+        "1": 60,
+        "2": 130,
+        "3": 270
+      }
+    },
+    "制造站": {
+      "type": "消耗",
+      "max_level": null,
+      "max_count": null,
+      "power": {
+        "1": null,
+        "2": null,
+        "3": null
+      },
+      "note": "文件中未明确列出制造站的电力消耗数据"
+    },
+    "贸易站": {
+      "type": "消耗",
+      "max_level": 3,
+      "max_count": null,
+      "power": {
+        "1": null,
+        "2": null,
+        "3": null
+      },
+      "note": "文件中未明确列出贸易站的电力消耗数据"
+    },
+    "控制中枢": {
+      "type": "消耗",
+      "max_level": 5,
+      "max_count": 1,
+      "power": {
+        "1": null,
+        "2": null,
+        "3": null,
+        "4": null,
+        "5": null
+      },
+      "note": "文件中未明确列出控制中枢的电力消耗数据"
+    },
+    "会客室": {
+      "type": "消耗",
+      "max_level": 3,
+      "max_count": 1,
+      "power": {
+        "1": null,
+        "2": null,
+        "3": null
+      },
+      "note": "文件中未明确列出会客室的电力消耗数据"
+    },
+    "加工站": {
+      "type": "消耗",
+      "max_level": 3,
+      "max_count": null,
+      "power": {
+        "1": null,
+        "2": null,
+        "3": null
+      },
+      "note": "文件中未明确列出加工站的电力消耗数据。加工站不消耗干员心情（瞬时消耗方式工作）。"
+    },
+    "办公室": {
+      "type": "消耗",
+      "max_level": 3,
+      "max_count": null,
+      "power": {
+        "1": 10,
+        "2": 30,
+        "3": 60
+      }
+    },
+    "训练室": {
+      "type": "消耗",
+      "max_level": 3,
+      "max_count": null,
+      "power": {
+        "1": 10,
+        "2": 30,
+        "3": 60
+      }
+    },
+    "宿舍": {
+      "type": "消耗",
+      "max_level": 5,
+      "max_count": 4,
+      "power": {
+        "0": 0,
+        "5": 65
+      },
+      "note": "等级0→5，消耗电力0→65。文件中未逐级拆分，仅给出范围。"
+    },
+    "活动室": {
+      "type": "消耗",
+      "max_level": 3,
+      "max_count": 6,
+      "power": {
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "note": "消耗电力0，可降级直至拆除"
+    }
+  }
+}

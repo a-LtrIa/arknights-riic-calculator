@@ -8,19 +8,21 @@ const props = defineProps({
 
 const emit = defineEmits(['assign', 'remove', 'close'])
 
-// Load operators from JSON file (filter out unobtainable ones)
-const allOperators = Object.values(operatorsData)
+// Load operators from JSON file (filter out unobtainable ones) with skills
+const allOperatorsWithSkills = Object.values(operatorsData)
   .flat()
   .filter(op => !op.isNotObtainable)
-  .map((op, idx) => ({
-    id: idx + 1,
-    name: op.name,
-    elite: 0,
-    rarity: parseInt(op.rarity?.replace('TIER_', '')) || 1,
-    morale: 50,
-    profession: op.profession_label || '先锋',
-    avatar: null,
-  }))
+
+const allOperators = allOperatorsWithSkills.map((op, idx) => ({
+  id: idx + 1,
+  name: op.name,
+  elite: 0,
+  rarity: parseInt(op.rarity?.replace('TIER_', '')) || 1,
+  morale: 50,
+  profession: op.profession_label || '先锋',
+  avatar: null,
+  skills: op.skills || [],
+}))
 
 const operators = ref(allOperators)
 
@@ -30,13 +32,40 @@ const selectedOperator = ref(null)
 
 const professions = ['all', '先锋', '近卫', '重装', '狙击', '术师', '医疗', '辅助', '特种']
 
+// Map room type to Chinese room name used in skills
+const roomTypeMap = {
+  trade: '贸易站',
+  manufacturing: '制造站',
+  power: '发电站',
+  control: '控制中枢',
+  dormitory: '宿舍',
+  meeting: '会客室',
+  workshop: '加工站',
+  office: '办公室',
+  training: '训练室',
+}
+
 const filteredOperators = computed(() => {
-  return operators.value.filter(op => {
+  const roomName = roomTypeMap[props.room.type] || props.room.type
+
+  // First filter
+  let filtered = operators.value.filter(op => {
     if (searchQuery.value && !op.name.includes(searchQuery.value)) return false
     if (selectedProfession.value !== 'all' && op.profession !== selectedProfession.value) return false
     if (props.room.operators.some(o => o.name === op.name)) return false
     return true
   })
+
+  // Sort: operators with matching room skill first
+  filtered.sort((a, b) => {
+    const aHasRoom = a.skills.some(s => s.room === roomName)
+    const bHasRoom = b.skills.some(s => s.room === roomName)
+    if (aHasRoom && !bHasRoom) return -1
+    if (!aHasRoom && bHasRoom) return 1
+    return b.rarity - a.rarity // Then sort by rarity
+  })
+
+  return filtered
 })
 
 const maxOps = computed(() => {
@@ -71,6 +100,11 @@ const confirmAssign = () => {
     emit('assign', selectedOperator.value)
     selectedOperator.value = null
   }
+}
+
+const hasMatchingSkill = (op) => {
+  const roomName = roomTypeMap[props.room.type] || props.room.type
+  return op.skills?.some(s => s.room === roomName) || false
 }
 
 const removeAll = () => {
@@ -162,13 +196,19 @@ const rarityColor = (rarity) => {
             v-for="op in filteredOperators"
             :key="op.id"
             class="operator-card"
-            :class="{ selected: selectedOperator?.id === op.id }"
+            :class="{
+              selected: selectedOperator?.id === op.id,
+              'skill-match': hasMatchingSkill(op)
+            }"
             @click="selectOperator(op)"
           >
             <div class="op-avatar">
               <span class="op-avatar-text">{{ op.name?.charAt(0) || '?' }}</span>
               <div class="op-rarity-badge" :style="{ background: rarityColor(op.rarity) }">
                 {{ op.rarity }}
+              </div>
+              <div v-if="hasMatchingSkill(op)" class="skill-match-badge" :title="'适合' + roomTypeMap[props.room.type]">
+                ★
               </div>
             </div>
             <div class="op-info">
@@ -559,5 +599,32 @@ const rarityColor = (rarity) => {
 .assign-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Skill match indicator */
+.operator-card.skill-match {
+  background: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.25);
+}
+
+.operator-card.skill-match:hover {
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+.skill-match-badge {
+  position: absolute;
+  bottom: -4px;
+  left: -4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+  color: white;
+  font-size: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 </style>

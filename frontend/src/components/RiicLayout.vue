@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import OperatorPanel from './OperatorPanel.vue'
 import operatorsData from '../data/operators_with_skills.json'
 
@@ -240,6 +240,114 @@ const maxOperators = (room) => {
   return roomTypes[room.type]?.maxOps || 0
 }
 
+// Power system
+const powerByLevel = { 1: 60, 2: 130, 3: 270 }
+
+// Power consumption by room type and level
+const powerConsumptionByLevel = {
+  control: { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 },
+  dormitory: { 1: -10, 2: -20, 3: -30, 4: -45, 5: -65 },
+  trade: { 1: -10, 2: -30, 3: -60 },
+  manufacturing: { 1: -10, 2: -30, 3: -60 },
+  power: { 1: 0, 2: 0, 3: 0 }, // Power stations don't consume
+  meeting: { 1: -10, 2: -30, 3: -60 },
+  workshop: { 1: -10, 2: -10, 3: -10 },
+  office: { 1: -10, 2: -10, 3: -10 },
+  training: { 1: -10, 2: -30, 3: -60 },
+  corridor: { 1: 0 },
+  empty: { 1: 0 },
+}
+
+const showPowerDetail = ref(false)
+
+const getPowerGeneration = (room) => {
+  if (room.type !== 'power' || !room.built) return 0
+  return powerByLevel[room.level] || 0
+}
+
+const getPowerConsumption = (room) => {
+  if (!room.built || room.type === 'empty' || room.type === 'corridor') return 0
+  const levelMap = powerConsumptionByLevel[room.type]
+  if (!levelMap) return 0
+  // Use room level, or the highest available level if room.level exceeds
+  const level = Math.min(room.level || 1, Object.keys(levelMap).length)
+  return levelMap[level] || 0
+}
+
+const totalPowerGeneration = computed(() => {
+  let total = 0
+  leftWingRooms.forEach(room => { total += getPowerGeneration(room) })
+  coreRooms.forEach(room => { total += getPowerGeneration(room) })
+  rightWingRooms.forEach(room => { total += getPowerGeneration(room) })
+  return total
+})
+
+const totalPowerConsumption = computed(() => {
+  let total = 0
+  leftWingRooms.forEach(room => { total += getPowerConsumption(room) })
+  coreRooms.forEach(room => { total += getPowerConsumption(room) })
+  rightWingRooms.forEach(room => { total += getPowerConsumption(room) })
+  return Math.abs(total)
+})
+
+const netPower = computed(() => {
+  return totalPowerGeneration.value - totalPowerConsumption.value
+})
+
+// Get all rooms with their power info for detail view
+const getPowerDetailRooms = () => {
+  const allRooms = [...leftWingRooms, ...coreRooms, ...rightWingRooms]
+  return allRooms.filter(room => room.built && room.type !== 'empty' && room.type !== 'corridor')
+    .map(room => ({
+      ...room,
+      generation: getPowerGeneration(room),
+      consumption: getPowerConsumption(room),
+    }))
+}
+
+// Drone system
+const droneCapacity = 235
+const baseDronePerDay = 240 // 1 drone per 6 minutes = 240/day
+const baseChargingSpeed = 1 // 1 drone / 6 minutes
+
+// Calculate drone bonus from power station operators
+const getDroneBonus = (room) => {
+  if (room.type !== 'power' || !room.built || room.operators.length === 0) return 0
+  // Base work bonus is always 5%
+  let bonus = 0.05
+  // Add operator-specific bonuses based on their skills
+  room.operators.forEach(op => {
+    // These would be looked up from operator skills data
+    // Simplified: check if operator has drone-related skill
+    const allOps = Object.values(operatorsData).flat()
+    const opData = allOps.find(o => o.name === op.name)
+    if (opData?.skills) {
+      opData.skills.forEach(skill => {
+        if (skill.room === '发电站' && skill.description.includes('充能')) {
+          // Extract percentage from description like "+20%"
+          const match = skill.description.match(/\+(\d+)%/)
+          if (match) {
+            bonus += parseInt(match[1]) / 100
+          }
+        }
+      })
+    }
+  })
+  return bonus
+}
+
+const totalDroneBonus = computed(() => {
+  let bonus = 0
+  leftWingRooms.forEach(room => { bonus += getDroneBonus(room) })
+  coreRooms.forEach(room => { bonus += getDroneBonus(room) })
+  rightWingRooms.forEach(room => { bonus += getDroneBonus(room) })
+  return bonus
+})
+
+const dailyDroneProduction = computed(() => {
+  return Math.floor(baseDronePerDay * (1 + totalDroneBonus.value))
+})
+
 // Overview mode functions
 const getAllRoomsGrouped = () => {
   const allRooms = [...leftWingRooms, ...coreRooms, ...rightWingRooms]
@@ -400,6 +508,27 @@ const clearSelection = () => {
             ></span>
           </button>
         </div>
+        <div class="h-4 w-px bg-base-700"></div>
+        <!-- Power & Drone Stats -->
+        <div class="flex items-center gap-4 px-3 py-1 bg-base-800/50 rounded">
+          <div
+            class="flex items-center gap-1.5 cursor-pointer hover:bg-base-700/50 px-2 py-1 rounded transition-colors"
+            @click="showPowerDetail = !showPowerDetail"
+          >
+            <span class="text-power-light text-sm">⚡</span>
+            <span class="text-xs font-mono" :class="netPower >= 0 ? 'text-power-light' : 'text-red-400'">
+              {{ totalPowerConsumption }}/{{ totalPowerGeneration }}
+            </span>
+            <span class="text-xs text-base-500">电力</span>
+          </div>
+          <div class="h-3 w-px bg-base-700"></div>
+          <div class="flex items-center gap-1.5">
+            <span class="text-control-light text-sm">🤖</span>
+            <span class="text-xs font-mono text-base-300">{{ dailyDroneProduction }}</span>
+            <span class="text-xs text-base-500">/天</span>
+            <span class="text-xs text-base-600">({{ droneCapacity }})</span>
+          </div>
+        </div>
       </div>
     </header>
 
@@ -422,6 +551,13 @@ const clearSelection = () => {
                 <div class="room-header">
                   <span class="room-name">{{ roomTypes[room.type]?.label }}</span>
                   <span class="level-badge" :class="`level-${room.type}`">Lv.{{ room.level }}</span>
+                  <span
+                    v-if="showPowerDetail && (getPowerGeneration(room) > 0 || getPowerConsumption(room) < 0)"
+                    class="power-badge"
+                    :class="getPowerGeneration(room) > 0 ? 'power-gen' : 'power-cons'"
+                  >
+                    {{ getPowerGeneration(room) > 0 ? '+' : '' }}{{ getPowerGeneration(room) || getPowerConsumption(room) }}
+                  </span>
                 </div>
                 <div class="room-subname-row">
                   <span class="room-subname">{{ room.subtype }}</span>
@@ -451,6 +587,13 @@ const clearSelection = () => {
                 <div class="room-header">
                   <span class="room-name">{{ roomTypes[room.type]?.label }}</span>
                   <span class="level-badge" :class="`level-${room.type}`">Lv.{{ room.level }}</span>
+                  <span
+                    v-if="showPowerDetail && (getPowerGeneration(room) > 0 || getPowerConsumption(room) < 0)"
+                    class="power-badge"
+                    :class="getPowerGeneration(room) > 0 ? 'power-gen' : 'power-cons'"
+                  >
+                    {{ getPowerGeneration(room) > 0 ? '+' : '' }}{{ getPowerGeneration(room) || getPowerConsumption(room) }}
+                  </span>
                 </div>
                 <div class="room-subname-row">
                   <span class="room-subname">{{ room.subtype }}</span>
@@ -480,6 +623,13 @@ const clearSelection = () => {
                 <div class="room-header">
                   <span class="room-name">{{ roomTypes[room.type]?.label }}</span>
                   <span class="level-badge" :class="`level-${room.type}`">Lv.{{ room.level }}</span>
+                  <span
+                    v-if="showPowerDetail && (getPowerGeneration(room) > 0 || getPowerConsumption(room) < 0)"
+                    class="power-badge"
+                    :class="getPowerGeneration(room) > 0 ? 'power-gen' : 'power-cons'"
+                  >
+                    {{ getPowerGeneration(room) > 0 ? '+' : '' }}{{ getPowerGeneration(room) || getPowerConsumption(room) }}
+                  </span>
                 </div>
                 <div class="room-subname-row">
                   <span class="room-subname">{{ room.subtype }}</span>
@@ -521,6 +671,13 @@ const clearSelection = () => {
               <div class="room-header">
                 <span class="room-name">{{ roomTypes['control']?.label }}</span>
                 <span class="level-badge level-control">Lv.{{ coreRooms[0].level }}</span>
+                <span
+                  v-if="showPowerDetail && (getPowerGeneration(coreRooms[0]) > 0 || getPowerConsumption(coreRooms[0]) < 0)"
+                  class="power-badge"
+                  :class="getPowerGeneration(coreRooms[0]) > 0 ? 'power-gen' : 'power-cons'"
+                >
+                  {{ getPowerGeneration(coreRooms[0]) > 0 ? '+' : '' }}{{ getPowerGeneration(coreRooms[0]) || getPowerConsumption(coreRooms[0]) }}
+                </span>
               </div>
               <div class="room-subname-row">
                 <span class="room-subname">{{ coreRooms[0].subtype }}</span>
@@ -566,6 +723,13 @@ const clearSelection = () => {
                 <div class="room-header">
                   <span class="room-name">{{ roomTypes[room.type]?.label }}</span>
                   <span class="level-badge" :class="`level-${room.type}`">Lv.{{ room.level }}</span>
+                  <span
+                    v-if="showPowerDetail && (getPowerGeneration(room) > 0 || getPowerConsumption(room) < 0)"
+                    class="power-badge"
+                    :class="getPowerGeneration(room) > 0 ? 'power-gen' : 'power-cons'"
+                  >
+                    {{ getPowerGeneration(room) > 0 ? '+' : '' }}{{ getPowerGeneration(room) || getPowerConsumption(room) }}
+                  </span>
                 </div>
                 <div class="room-subname-row">
                   <span class="room-subname">{{ room.subtype }}</span>
@@ -608,6 +772,13 @@ const clearSelection = () => {
               <div class="room-header">
                 <span class="room-name">{{ roomTypes[room.type]?.label }}</span>
                 <span class="level-badge" :class="`level-${room.type}`">Lv.{{ room.level }}</span>
+                <span
+                  v-if="showPowerDetail && (getPowerGeneration(room) > 0 || getPowerConsumption(room) < 0)"
+                  class="power-badge"
+                  :class="getPowerGeneration(room) > 0 ? 'power-gen' : 'power-cons'"
+                >
+                  {{ getPowerGeneration(room) > 0 ? '+' : '' }}{{ getPowerGeneration(room) || getPowerConsumption(room) }}
+                </span>
               </div>
               <div class="room-subname-row">
                 <span class="room-subname">{{ room.subtype }}</span>
@@ -1074,6 +1245,12 @@ const clearSelection = () => {
   font-size: 12px;
 }
 
+.room-power {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
 /* Control Center */
 .control-card {
   border-color: rgba(249, 115, 22, 0.2);
@@ -1114,6 +1291,25 @@ const clearSelection = () => {
 .level-badge.level-workshop { color: var(--color-workshop-light); background: rgba(20, 184, 166, 0.15); }
 .level-badge.level-office { color: var(--color-office-light); background: rgba(99, 102, 241, 0.15); }
 .level-badge.level-training { color: var(--color-training-light); background: rgba(239, 68, 68, 0.15); }
+
+.power-badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 1px 5px;
+  border-radius: 3px;
+  margin-left: 4px;
+}
+
+.power-gen {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.15);
+}
+
+.power-cons {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
 
 .room-subname-row {
   margin-top: -2px;
