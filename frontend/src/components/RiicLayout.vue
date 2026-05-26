@@ -1,11 +1,15 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import OperatorPanel from './OperatorPanel.vue'
+import operatorsData from '../data/operators_with_skills.json'
 
 const buildMode = ref(false)
+const overviewMode = ref(false)
 const selectedRoom = ref(null)
 const showBuildMenu = ref(null)
+const showEditMenu = ref(null)
 const showOperatorPanel = ref(false)
+const selectedOperators = ref([]) // For batch operations
 
 const roomTypes = {
   control: { label: '控制中枢', color: 'var(--color-control)', maxOps: 5 },
@@ -20,6 +24,19 @@ const roomTypes = {
   empty: { label: '可建造', color: '#4a4a4a', maxOps: 0 },
   corridor: { label: '走廊', color: '#333333', maxOps: 0 },
 }
+
+// Load operators from JSON file (filter out unobtainable ones)
+const allOperators = Object.values(operatorsData)
+  .flat()
+  .filter(op => !op.isNotObtainable)
+  .map(op => ({
+    name: op.name,
+    rarity: op.rarity,
+    rarityLabel: op.rarity_label,
+    profession: op.profession_label,
+    elite: 0,
+    level: 1,
+  }))
 
 // Left wing: 9 rooms, 3 columns
 const leftWingRooms = reactive([
@@ -45,14 +62,13 @@ const rightWingRooms = reactive([
   { id: 'right-3', type: 'training', subtype: '训练室', level: 3, operators: [], built: true },
 ])
 
-// Core: 5 dormitories + 1 control center (same height)
+// Core: 4 dormitories + 1 control center
 const coreRooms = reactive([
   { id: 'core-0', type: 'control', subtype: '控制中枢', level: 5, operators: [], built: true, span: 1 },
   { id: 'core-1', type: 'dormitory', subtype: '宿舍 001', level: 5, operators: [], built: true, span: 1 },
   { id: 'core-2', type: 'dormitory', subtype: '宿舍 002', level: 5, operators: [], built: true, span: 1 },
   { id: 'core-3', type: 'dormitory', subtype: '宿舍 003', level: 5, operators: [], built: true, span: 1 },
   { id: 'core-4', type: 'dormitory', subtype: '宿舍 004', level: 5, operators: [], built: true, span: 1 },
-  { id: 'core-5', type: 'dormitory', subtype: '宿舍 005', level: 5, operators: [], built: true, span: 1 },
 ])
 
 // Corridor rooms
@@ -116,8 +132,13 @@ const buildableTypes = [
 
 const handleRoomClick = (room) => {
   if (buildMode.value) {
-    if (!room.built) {
+    if (!room.built || room.type === 'empty') {
       showBuildMenu.value = room
+      showEditMenu.value = null
+    } else {
+      // All built rooms can be edited (level + demolish)
+      showEditMenu.value = room
+      showBuildMenu.value = null
     }
     return
   }
@@ -125,6 +146,23 @@ const handleRoomClick = (room) => {
     selectedRoom.value = room
     showOperatorPanel.value = true
   }
+}
+
+// Check if room belongs to left wing
+const isLeftWingRoom = (room) => {
+  return leftWingRooms.includes(room)
+}
+
+// Check if room type can be changed (only left wing)
+const canChangeType = (room) => {
+  return isLeftWingRoom(room)
+}
+
+// Get max level for room type
+const getMaxLevel = (room) => {
+  if (room.type === 'control') return 6
+  if (room.type === 'dormitory') return 5
+  return 3
 }
 
 const handleBuildSelect = (type) => {
@@ -144,6 +182,36 @@ const handleBuildSelect = (type) => {
 
 const closeBuildMenu = () => {
   showBuildMenu.value = null
+}
+
+// Edit menu functions
+const closeEditMenu = () => {
+  showEditMenu.value = null
+}
+
+const changeRoomType = (room, newType) => {
+  const typeNames = {
+    trade: '贸易站',
+    manufacturing: '制造站',
+    power: '发电站',
+  }
+  room.type = newType
+  room.subtype = typeNames[newType] || newType
+  room.level = 3
+  room.operators = []
+}
+
+const changeRoomLevel = (room, newLevel) => {
+  room.level = newLevel
+}
+
+const demolishRoom = (room) => {
+  room.type = 'empty'
+  room.subtype = ''
+  room.level = 0
+  room.operators = []
+  room.built = false
+  showEditMenu.value = null
 }
 
 const assignOperator = (operator) => {
@@ -171,6 +239,132 @@ const operatorCount = (room) => {
 const maxOperators = (room) => {
   return roomTypes[room.type]?.maxOps || 0
 }
+
+// Overview mode functions
+const getAllRoomsGrouped = () => {
+  const allRooms = [...leftWingRooms, ...coreRooms, ...rightWingRooms]
+  const builtRooms = allRooms.filter(room => room.built && room.type !== 'corridor' && room.type !== 'empty')
+
+  // Group by type
+  const grouped = {}
+  builtRooms.forEach(room => {
+    if (!grouped[room.type]) {
+      grouped[room.type] = []
+    }
+    grouped[room.type].push(room)
+  })
+
+  return grouped
+}
+
+const getEmptySlots = (room) => {
+  const max = maxOperators(room)
+  const current = operatorCount(room)
+  return max - current
+}
+
+const batchAssignMode = ref(false)
+const batchAssignRoom = ref(null)
+const selectedOperatorDetail = ref(null)
+
+const toggleOperatorSelection = (operator, roomId) => {
+  const key = `${roomId}-${operator.name}`
+  const idx = selectedOperators.value.indexOf(key)
+  if (idx > -1) {
+    selectedOperators.value.splice(idx, 1)
+  } else {
+    // Check if we can add more (limit by available slots)
+    const roomIdOnly = roomId.replace('-batch', '')
+    const room = [...leftWingRooms, ...coreRooms, ...rightWingRooms].find(r => r.id === roomIdOnly)
+    if (room) {
+      const emptySlots = getEmptySlots(room)
+      const currentSelected = selectedOperators.value.filter(k => k.startsWith(roomId + '-')).length
+      if (currentSelected >= emptySlots) {
+        return // Don't add more if at capacity
+      }
+    }
+    selectedOperators.value.push(key)
+  }
+}
+
+const isOperatorSelected = (operator, roomId) => {
+  return selectedOperators.value.includes(`${roomId}-${operator.name}`)
+}
+
+const showOperatorSkills = (operator) => {
+  selectedOperatorDetail.value = operator
+}
+
+const hideOperatorSkills = () => {
+  selectedOperatorDetail.value = null
+}
+
+const getOperatorSkills = (operatorName) => {
+  const allOps = Object.values(operatorsData).flat()
+  const op = allOps.find(o => o.name === operatorName)
+  return op?.skills || []
+}
+
+// Map skill room name to room type
+const getRoomTypeFromSkill = (roomName) => {
+  const roomMap = {
+    '发电站': 'power',
+    '制造站': 'manufacturing',
+    '贸易站': 'trade',
+    '宿舍': 'dormitory',
+    '控制中枢': 'control',
+    '加工站': 'workshop',
+    '办公室': 'office',
+    '训练室': 'training',
+    '会客室': 'meeting',
+  }
+  return roomMap[roomName] || 'empty'
+}
+
+const startBatchAssign = (room) => {
+  batchAssignRoom.value = room
+  batchAssignMode.value = true
+  selectedOperatorDetail.value = null
+}
+
+const confirmBatchAssign = (operators) => {
+  if (!batchAssignRoom.value) return
+  const max = maxOperators(batchAssignRoom.value)
+  const current = operatorCount(batchAssignRoom.value)
+  const available = max - current
+
+  operators.slice(0, available).forEach(op => {
+    batchAssignRoom.value.operators.push({ ...op })
+  })
+
+  batchAssignMode.value = false
+  batchAssignRoom.value = null
+}
+
+const cancelBatchAssign = () => {
+  batchAssignMode.value = false
+  batchAssignRoom.value = null
+}
+
+const removeSelectedOperators = () => {
+  const allRooms = [...leftWingRooms, ...coreRooms, ...rightWingRooms]
+  selectedOperators.value.forEach(key => {
+    const [roomId, ...nameParts] = key.split('-')
+    const operatorName = nameParts.join('-')
+    const room = allRooms.find(r => r.id === roomId)
+    if (room) {
+      const opIndex = room.operators.findIndex(op => op.name === operatorName)
+      if (opIndex > -1) {
+        room.operators.splice(opIndex, 1)
+      }
+    }
+  })
+  selectedOperators.value = []
+}
+
+const clearSelection = () => {
+  selectedOperators.value = []
+}
 </script>
 
 <template>
@@ -184,6 +378,14 @@ const maxOperators = (room) => {
       </div>
       <div class="flex items-center gap-4">
         <span class="text-xs text-base-400 font-mono">v2.0.1</span>
+        <div class="h-4 w-px bg-base-700"></div>
+        <button
+          class="text-xs px-3 py-1.5 rounded font-mono transition-colors cursor-pointer"
+          :class="overviewMode ? 'bg-dormitory/20 text-dormitory-light border border-dormitory/30' : 'bg-base-600/50 text-base-300 border border-base-500/30 hover:bg-base-600'"
+          @click="overviewMode = !overviewMode"
+        >
+          进驻总览
+        </button>
         <div class="h-4 w-px bg-base-700"></div>
         <div class="flex items-center gap-2">
           <span class="text-xs font-mono text-base-400" :class="{ 'text-control': buildMode }">建造模式</span>
@@ -452,6 +654,60 @@ const maxOperators = (room) => {
       </div>
     </Teleport>
 
+    <!-- Edit Room Menu (Build Mode) -->
+    <Teleport to="body">
+      <div v-if="showEditMenu" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm" @click.self="closeEditMenu">
+        <div class="build-menu">
+          <div class="build-menu-header">
+            <span class="text-base-200 font-mono text-sm">编辑房间</span>
+            <button class="text-base-500 hover:text-base-200 transition-colors text-lg leading-none cursor-pointer" @click="closeEditMenu">&times;</button>
+          </div>
+          <div class="build-menu-body">
+            <!-- Room Type Selection (only for left wing) -->
+            <div v-if="isLeftWingRoom(showEditMenu)" class="edit-section">
+              <span class="edit-label">房间类型</span>
+              <div class="type-buttons">
+                <button
+                  v-for="bt in buildableTypes"
+                  :key="bt.type"
+                  class="type-btn"
+                  :class="{ active: showEditMenu.type === bt.type }"
+                  :style="{ '--accent': bt.color }"
+                  @click="changeRoomType(showEditMenu, bt.type)"
+                >
+                  <span class="type-btn-icon">{{ bt.icon }}</span>
+                  <span>{{ bt.label }}</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Level Adjustment -->
+            <div class="edit-section">
+              <span class="edit-label">房间等级</span>
+              <div class="level-buttons">
+                <button
+                  v-for="lv in (showEditMenu.type === 'dormitory' ? 5 : showEditMenu.type === 'control' ? 6 : 3)"
+                  :key="lv"
+                  class="level-btn"
+                  :class="{ active: showEditMenu.level === lv }"
+                  @click="changeRoomLevel(showEditMenu, lv)"
+                >
+                  Lv.{{ lv }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Demolish -->
+            <div class="edit-section">
+              <button class="demolish-btn" @click="demolishRoom(showEditMenu)">
+                拆除房间
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Teleport>
+
     <!-- Operator Panel -->
     <Teleport to="body">
       <OperatorPanel
@@ -461,6 +717,170 @@ const maxOperators = (room) => {
         @remove="removeOperator"
         @close="closeOperatorPanel"
       />
+    </Teleport>
+
+    <!-- Overview Mode Panel -->
+    <Teleport to="body">
+      <div v-if="overviewMode && !batchAssignMode" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div class="overview-panel">
+          <div class="overview-header">
+            <span class="text-base-200 font-mono text-sm">进驻总览</span>
+            <div class="flex items-center gap-3">
+              <span v-if="selectedOperators.length > 0" class="text-xs text-dormitory-light">
+                已选择 {{ selectedOperators.length }} 名干员
+              </span>
+              <button
+                v-if="selectedOperators.length > 0"
+                class="text-xs px-3 py-1 rounded bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30 cursor-pointer transition-colors"
+                @click="removeSelectedOperators"
+              >
+                批量撤离
+              </button>
+              <button
+                v-if="selectedOperators.length > 0"
+                class="text-xs px-3 py-1 rounded bg-base-600/50 text-base-300 border border-base-500/30 hover:bg-base-600 cursor-pointer transition-colors"
+                @click="clearSelection"
+              >
+                取消选择
+              </button>
+              <button class="text-base-500 hover:text-base-200 transition-colors text-lg leading-none cursor-pointer" @click="overviewMode = false">&times;</button>
+            </div>
+          </div>
+          <div class="overview-body">
+            <!-- Grouped by type -->
+            <template v-for="(rooms, type) in getAllRoomsGrouped()" :key="type">
+              <div class="overview-type-header">
+                <span class="overview-type-label" :style="{ color: getColorVar(type) }">
+                  {{ roomTypes[type]?.label }}
+                </span>
+                <span class="overview-type-count">{{ rooms.length }} 个设施</span>
+              </div>
+              <div
+                v-for="room in rooms"
+                :key="room.id"
+                class="overview-room-row"
+              >
+                <div class="overview-room-info">
+                  <div class="room-info-left">
+                    <span class="room-info-name">{{ room.subtype }}</span>
+                    <span class="level-badge" :class="`level-${room.type}`">Lv.{{ room.level }}</span>
+                  </div>
+                  <div class="room-info-right">
+                    <span class="room-info-count">
+                      <span class="text-base-400 text-xs mr-1">👤</span>
+                      <span class="font-mono text-sm" :class="operatorCount(room) === maxOperators(room) ? 'text-power-light' : 'text-trade-light'">
+                        {{ operatorCount(room) }}/{{ maxOperators(room) }}
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div class="overview-room-operators">
+                  <!-- Existing operators -->
+                  <div
+                    v-for="(op, idx) in room.operators"
+                    :key="idx"
+                    class="overview-operator"
+                    :class="{ selected: isOperatorSelected(op, room.id) }"
+                    @click="toggleOperatorSelection(op, room.id)"
+                  >
+                    <div class="op-avatar">{{ op.name?.charAt(0) || '?' }}</div>
+                    <div class="op-info">
+                      <span class="op-name">{{ op.name || '干员' }}</span>
+                      <span class="op-elite">精英{{ op.elite || 0 }} {{ op.level || 1 }}</span>
+                    </div>
+                    <div v-if="isOperatorSelected(op, room.id)" class="op-check">✓</div>
+                  </div>
+                  <!-- Empty slots -->
+                  <div
+                    v-for="slot in getEmptySlots(room)"
+                    :key="'empty-' + slot"
+                    class="overview-empty-slot"
+                    @click="startBatchAssign(room)"
+                  >
+                    <span class="empty-slot-plus">+</span>
+                    <span class="empty-slot-text">点击进驻</span>
+                  </div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+
+      <!-- Batch Assign Mode -->
+      <div v-if="overviewMode && batchAssignMode" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div class="overview-panel batch-assign-panel">
+          <div class="overview-header">
+            <span class="text-base-200 font-mono text-sm">批量进驻 - {{ batchAssignRoom?.subtype }}</span>
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-base-400">
+                剩余 {{ getEmptySlots(batchAssignRoom) }} 个空位
+              </span>
+              <button class="text-base-500 hover:text-base-200 transition-colors text-lg leading-none cursor-pointer" @click="cancelBatchAssign">&times;</button>
+            </div>
+          </div>
+          <div class="batch-assign-content">
+            <div class="batch-assign-list">
+              <div
+                v-for="(op, idx) in allOperators"
+                :key="idx"
+                class="batch-assign-operator"
+                :class="{ selected: isOperatorSelected(op, batchAssignRoom?.id + '-batch') }"
+                @click="toggleOperatorSelection(op, batchAssignRoom?.id + '-batch'); showOperatorSkills(op)"
+              >
+                <div class="op-avatar">{{ op.name?.charAt(0) || '?' }}</div>
+                <div class="op-info">
+                  <span class="op-name">{{ op.name }}</span>
+                  <span class="op-elite">{{ op.rarityLabel }} {{ op.profession }}</span>
+                </div>
+                <div v-if="isOperatorSelected(op, batchAssignRoom?.id + '-batch')" class="op-check">✓</div>
+              </div>
+            </div>
+            <!-- Skills Panel -->
+            <div v-if="selectedOperatorDetail" class="skills-panel">
+              <div class="skills-header">
+                <span class="skills-op-name">{{ selectedOperatorDetail.name }}</span>
+                <span class="skills-op-info">{{ selectedOperatorDetail.rarityLabel }} {{ selectedOperatorDetail.profession }}</span>
+              </div>
+              <div class="skills-list">
+                <div
+                  v-for="(skill, idx) in getOperatorSkills(selectedOperatorDetail.name)"
+                  :key="idx"
+                  class="skill-item"
+                >
+                  <div class="skill-name">{{ skill.skill_name }}</div>
+                  <div class="skill-room" :style="{ color: getColorVar(getRoomTypeFromSkill(skill.room)) }">
+                    {{ skill.room }}
+                  </div>
+                  <div class="skill-desc">{{ skill.description }}</div>
+                </div>
+                <div v-if="getOperatorSkills(selectedOperatorDetail.name).length === 0" class="no-skills">
+                  暂无基建技能
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="batch-assign-actions">
+            <button class="cancel-btn" @click="cancelBatchAssign">取消</button>
+            <button
+              class="confirm-btn"
+              :disabled="selectedOperators.filter(k => k.startsWith(batchAssignRoom?.id + '-batch')).length === 0"
+              @click="() => {
+                const ops = selectedOperators
+                  .filter(k => k.startsWith(batchAssignRoom?.id + '-batch'))
+                  .map(k => {
+                    const name = k.replace(batchAssignRoom?.id + '-batch-', '')
+                    return allOperators.find(o => o.name === name)
+                  })
+                  .filter(Boolean)
+                confirmBatchAssign(ops)
+              }"
+            >
+              确认进驻 ({{ selectedOperators.filter(k => k.startsWith(batchAssignRoom?.id + '-batch')).length }})
+            </button>
+          </div>
+        </div>
+      </div>
     </Teleport>
   </div>
 </template>
@@ -478,7 +898,7 @@ const maxOperators = (room) => {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding-top: calc(78px + 6px); /* offset top by 1 card */
+  padding-top: 110px; /* offset top by 1 card */
 }
 
 .left-row {
@@ -560,7 +980,7 @@ const maxOperators = (room) => {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding-top: calc(78px + 6px); /* offset by 1 card + gap */
+  padding-top: 60px; /* offset by 1 card + gap */
   width: 140px;
   min-width: 140px;
 }
@@ -575,7 +995,7 @@ const maxOperators = (room) => {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   min-height: 72px;
-  min-width: 130px;
+  min-width: 180px;
   width: 100%;
 }
 
@@ -838,6 +1258,477 @@ const maxOperators = (room) => {
 
 .build-option:hover .build-arrow {
   transform: translateX(3px);
+}
+
+/* Edit Menu */
+.edit-section {
+  padding: 8px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.edit-section:last-child {
+  border-bottom: none;
+}
+
+.edit-label {
+  display: block;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.type-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.type-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #9ca3af;
+  font-size: 11px;
+}
+
+.type-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--accent, rgba(255, 255, 255, 0.15));
+  color: #d1d5db;
+}
+
+.type-btn.active {
+  background: rgba(var(--accent-rgb, 59, 130, 246), 0.15);
+  border-color: var(--accent, rgba(255, 255, 255, 0.2));
+  color: var(--accent, #d1d5db);
+}
+
+.type-btn-icon {
+  font-size: 20px;
+}
+
+.level-buttons {
+  display: flex;
+  gap: 6px;
+}
+
+.level-btn {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #9ca3af;
+  font-size: 11px;
+  font-family: var(--font-mono);
+}
+
+.level-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #d1d5db;
+}
+
+.level-btn.active {
+  background: rgba(234, 179, 8, 0.15);
+  border-color: rgba(234, 179, 8, 0.4);
+  color: #eab308;
+}
+
+.demolish-btn {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #ef4444;
+  font-size: 12px;
+  font-family: var(--font-mono);
+}
+
+.demolish-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* Overview Panel */
+.overview-panel {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  width: 800px;
+  max-width: 95vw;
+  max-height: 85vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.overview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.overview-body {
+  padding: 12px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.overview-type-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  margin-bottom: 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.overview-type-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.overview-type-count {
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.overview-room-row {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+}
+
+.overview-room-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.room-info-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.room-info-name {
+  font-size: 12px;
+  color: #d1d5db;
+}
+
+.room-info-right {
+  display: flex;
+  align-items: center;
+}
+
+.room-info-count {
+  display: flex;
+  align-items: center;
+}
+
+.overview-room-operators {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.overview-operator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.overview-operator:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.overview-operator.selected {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.op-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #374151, #1f2937);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #d1d5db;
+}
+
+.op-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.op-name {
+  font-size: 11px;
+  color: #d1d5db;
+}
+
+.op-elite {
+  font-size: 9px;
+  color: #6b7280;
+  font-family: var(--font-mono);
+}
+
+.op-check {
+  color: #a78bfa;
+  font-size: 12px;
+}
+
+.overview-empty {
+  font-size: 11px;
+  color: #4b5563;
+  padding: 4px 0;
+}
+
+/* Empty Slot */
+.overview-empty-slot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 90px;
+}
+
+.overview-empty-slot:hover {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: rgba(139, 92, 246, 0.3);
+  border-style: solid;
+}
+
+.empty-slot-plus {
+  font-size: 14px;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.overview-empty-slot:hover .empty-slot-plus {
+  color: #a78bfa;
+}
+
+.empty-slot-text {
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.overview-empty-slot:hover .empty-slot-text {
+  color: #a78bfa;
+}
+
+/* Batch Assign */
+.batch-assign-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+  margin-bottom: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.batch-assign-panel {
+  width: 1000px;
+}
+
+.batch-assign-content {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.batch-assign-list {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+  align-content: start;
+}
+
+.batch-assign-operator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.batch-assign-operator:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.batch-assign-operator.selected {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.3);
+}
+
+.batch-assign-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cancel-btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #9ca3af;
+  font-size: 12px;
+}
+
+.cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #d1d5db;
+}
+
+.confirm-btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  background: rgba(139, 92, 246, 0.2);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #a78bfa;
+  font-size: 12px;
+}
+
+.confirm-btn:hover:not(:disabled) {
+  background: rgba(139, 92, 246, 0.3);
+}
+
+.confirm-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Skills Panel */
+.skills-panel {
+  width: 280px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.skills-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.skills-op-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d1d5db;
+}
+
+.skills-op-info {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skill-item {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.skill-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: #d1d5db;
+  margin-bottom: 4px;
+}
+
+.skill-room {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.skill-desc {
+  font-size: 11px;
+  color: #9ca3af;
+  line-height: 1.4;
+}
+
+.no-skills {
+  font-size: 12px;
+  color: #6b7280;
+  text-align: center;
+  padding: 20px;
 }
 
 /* Responsive */

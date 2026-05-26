@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
+import operatorsData from '../data/operators_with_skills.json'
 
 const props = defineProps({
   room: { type: Object, required: true },
@@ -7,26 +8,21 @@ const props = defineProps({
 
 const emit = defineEmits(['assign', 'remove', 'close'])
 
-const operators = ref([
-  { id: 1, name: '银灰', elite: 2, rarity: 6, morale: 75, profession: '近卫', avatar: null },
-  { id: 2, name: '艾雅法拉', elite: 2, rarity: 6, morale: 60, profession: '术师', avatar: null },
-  { id: 3, name: '塞雷娅', elite: 2, rarity: 6, morale: 90, profession: '重装', avatar: null },
-  { id: 4, name: '能天使', elite: 2, rarity: 6, morale: 85, profession: '狙击', avatar: null },
-  { id: 5, name: '煌', elite: 2, rarity: 6, morale: 70, profession: '近卫', avatar: null },
-  { id: 6, name: '棘刺', elite: 2, rarity: 6, morale: 65, profession: '近卫', avatar: null },
-  { id: 7, name: '史尔特尔', elite: 2, rarity: 6, morale: 55, profession: '近卫', avatar: null },
-  { id: 8, name: '山', elite: 2, rarity: 6, morale: 80, profession: '近卫', avatar: null },
-  { id: 9, name: '凯尔希', elite: 2, rarity: 6, morale: 95, profession: '医疗', avatar: null },
-  { id: 10, name: '焰影苇草', elite: 2, rarity: 6, morale: 72, profession: '医疗', avatar: null },
-  { id: 11, name: '琴柳', elite: 2, rarity: 6, morale: 68, profession: '先锋', avatar: null },
-  { id: 12, name: '风笛', elite: 2, rarity: 6, morale: 88, profession: '先锋', avatar: null },
-  { id: 13, name: '浊心斯卡蒂', elite: 2, rarity: 6, morale: 62, profession: '辅助', avatar: null },
-  { id: 14, name: '铃兰', elite: 2, rarity: 6, morale: 78, profession: '辅助', avatar: null },
-  { id: 15, name: '德克萨斯', elite: 1, rarity: 5, morale: 82, profession: '先锋', avatar: null },
-  { id: 16, name: '拉普兰德', elite: 1, rarity: 5, morale: 74, profession: '近卫', avatar: null },
-  { id: 17, name: '白面鸮', elite: 1, rarity: 5, morale: 69, profession: '医疗', avatar: null },
-  { id: 18, name: '赫默', elite: 1, rarity: 5, morale: 86, profession: '医疗', avatar: null },
-])
+// Load operators from JSON file (filter out unobtainable ones)
+const allOperators = Object.values(operatorsData)
+  .flat()
+  .filter(op => !op.isNotObtainable)
+  .map((op, idx) => ({
+    id: idx + 1,
+    name: op.name,
+    elite: 0,
+    rarity: parseInt(op.rarity?.replace('TIER_', '')) || 1,
+    morale: 50,
+    profession: op.profession_label || '先锋',
+    avatar: null,
+  }))
+
+const operators = ref(allOperators)
 
 const searchQuery = ref('')
 const selectedProfession = ref('all')
