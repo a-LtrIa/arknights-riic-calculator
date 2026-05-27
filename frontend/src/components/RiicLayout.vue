@@ -1314,12 +1314,12 @@ const clearSelection = () => {
   flex-direction: column;
   align-items: center;
   min-width: 36px;
-  gap: 42px;
+  gap: 4px;
 }
 
 .corridor-square {
   width: 36px;
-  height: 36px;
+  height: 73.5px;
   background: #1A1D20;
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 2px;
