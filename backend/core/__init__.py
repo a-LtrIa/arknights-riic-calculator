@@ -17,7 +17,7 @@ from .base_classes import (
 )
 from .operator_classes import 迷迭香, 酒神, 弑君者, 黑键
 from .station_calculator import 制造站效率计算器
-from .trade_station_calculator import 贸易站效率计算器, 计算贸易站效率
+from .trade_station_calculator import 贸易站效率计算器
 from .building_simulator import 基建模拟器
 from .facility_calculators import (
     发电站效率计算器,

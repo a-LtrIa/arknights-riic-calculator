@@ -1,39 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Fira+Code:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --color-base-900: #0d0d0d;
-  --color-base-800: #1a1a1a;
-  --color-base-700: #2a2a2a;
+  --color-base-900: #1a1a1a;
+  --color-base-800: #242424;
+  --color-base-700: #2e2e2e;
   --color-base-600: #3a3a3a;
-  --color-base-500: #4a4a4a;
+  --color-base-500: #505050;
   --color-base-400: #6b7280;
   --color-base-300: #9ca3af;
   --color-base-200: #d1d5db;
   --color-base-100: #f3f4f6;
 
-  --color-trade: #3b82f6;
-  --color-trade-light: #60a5fa;
-  --color-trade-dark: #1d4ed8;
-  --color-manufacturing: #eab308;
-  --color-manufacturing-light: #fde047;
-  --color-manufacturing-dark: #a16207;
-  --color-power: #22c55e;
-  --color-power-light: #4ade80;
-  --color-power-dark: #15803d;
-  --color-control: #f97316;
-  --color-control-light: #fb923c;
-  --color-control-dark: #c2410c;
-  --color-dormitory: #8b5cf6;
-  --color-dormitory-light: #a78bfa;
-  --color-dormitory-dark: #6d28d9;
-  --color-meeting: #ec4899;
-  --color-meeting-light: #f472b6;
-  --color-workshop: #14b8a6;
-  --color-office: #6366f1;
-  --color-training: #ef4444;
+  --color-trade: #4B93A8;
+  --color-trade-light: #5A9DAE;
+  --color-trade-dark: #3A7A8A;
+  --color-manufacturing: #D49E35;
+  --color-manufacturing-light: #E0B04E;
+  --color-manufacturing-dark: #B8832A;
+  --color-power: #529A71;
+  --color-power-light: #64B084;
+  --color-power-dark: #3D7A55;
+  --color-control: #C07A3B;
+  --color-control-light: #D48F4F;
+  --color-control-dark: #A0652E;
+  --color-dormitory: #7A828A;
+  --color-dormitory-light: #8FA3A6;
+  --color-dormitory-dark: #636B73;
+  --color-meeting: #A84B4B;
+  --color-meeting-light: #BF5E5E;
+  --color-workshop: #4A9A8E;
+  --color-workshop-light: #5CAEA2;
+  --color-office: #6B7599;
+  --color-office-light: #7D87A8;
+  --color-training: #B85757;
+  --color-training-light: #CC6B6B;
 
-  --font-mono: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-  --font-sans: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Share Tech Mono', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+  --font-sans: 'Fira Code', 'Inter', 'Segoe UI', system-ui, sans-serif;
 }
 
 @layer base {
@@ -45,7 +49,11 @@
 
   body {
     font-family: var(--font-sans);
-    background: #0d0d0d;
+    background-color: #e5e0d8;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
     color: #d1d5db;
     overflow-x: hidden;
   }
@@ -66,5 +74,22 @@
 
   ::-webkit-scrollbar-thumb:hover {
     background: #4a4a4a;
+  }
+}
+
+@layer utilities {
+  .bg-grid-pattern {
+    background-color: #e5e0d8;
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .bg-dark-pattern {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
   }
 }
