@@ -119,8 +119,12 @@ class 贸易站效率计算器:
         for op in self.进驻干员:
             name = op["名称"]
             elite = op["精英等级"]
-            干员实例 = 创建干员实例(name, elite, self.特殊变量, self.配置数据, self.设施名称)
-            self.干员实例列表.append(干员实例)
+            try:
+                干员实例 = 创建干员实例(name, elite, self.特殊变量, self.配置数据, self.设施名称)
+                self.干员实例列表.append(干员实例)
+            except ValueError:
+                # 未知干员，跳过
+                pass
 
     def 获取干员技能修正(self):
         """获取干员技能对订单概率和特殊订单的影响"""

@@ -4,9 +4,11 @@ import operatorsData from '../data/operators_with_skills.json'
 
 const props = defineProps({
   room: { type: Object, required: true },
+  manufacturingProducts: { type: Array, default: () => [] },
+  tradeProducts: { type: Array, default: () => [] },
 })
 
-const emit = defineEmits(['assign', 'remove', 'close'])
+const emit = defineEmits(['assign', 'assignMultiple', 'updateProduct', 'remove', 'close'])
 
 // Load operators from JSON file (filter out unobtainable ones) with skills
 const allOperatorsWithSkills = Object.values(operatorsData)
@@ -28,7 +30,7 @@ const operators = ref(allOperators)
 
 const searchQuery = ref('')
 const selectedProfession = ref('all')
-const selectedOperator = ref(null)
+const selectedOperators = ref(new Set())
 
 const professions = ['all', '先锋', '近卫', '重装', '狙击', '术师', '医疗', '辅助', '特种']
 
@@ -48,7 +50,6 @@ const roomTypeMap = {
 const filteredOperators = computed(() => {
   const roomName = roomTypeMap[props.room.type] || props.room.type
 
-  // First filter
   let filtered = operators.value.filter(op => {
     if (searchQuery.value && !op.name.includes(searchQuery.value)) return false
     if (selectedProfession.value !== 'all' && op.profession !== selectedProfession.value) return false
@@ -56,13 +57,12 @@ const filteredOperators = computed(() => {
     return true
   })
 
-  // Sort: operators with matching room skill first
   filtered.sort((a, b) => {
     const aHasRoom = a.skills.some(s => s.room === roomName)
     const bHasRoom = b.skills.some(s => s.room === roomName)
     if (aHasRoom && !bHasRoom) return -1
     if (!aHasRoom && bHasRoom) return 1
-    return b.rarity - a.rarity // Then sort by rarity
+    return b.rarity - a.rarity
   })
 
   return filtered
@@ -91,14 +91,34 @@ const roomColor = computed(() => {
   return map[props.room.type] || '#666'
 })
 
-const selectOperator = (op) => {
-  selectedOperator.value = selectedOperator.value?.id === op.id ? null : op
+const hasProductSelector = computed(() => {
+  return props.room.type === 'manufacturing' || props.room.type === 'trade'
+})
+
+const currentProducts = computed(() => {
+  if (props.room.type === 'manufacturing') return props.manufacturingProducts
+  if (props.room.type === 'trade') return props.tradeProducts
+  return []
+})
+
+const toggleOperator = (op) => {
+  const newSet = new Set(selectedOperators.value)
+  if (newSet.has(op.id)) {
+    newSet.delete(op.id)
+  } else {
+    const available = maxOps.value - props.room.operators.length
+    if (newSet.size < available) {
+      newSet.add(op.id)
+    }
+  }
+  selectedOperators.value = newSet
 }
 
 const confirmAssign = () => {
-  if (selectedOperator.value) {
-    emit('assign', selectedOperator.value)
-    selectedOperator.value = null
+  const selected = filteredOperators.value.filter(op => selectedOperators.value.has(op.id))
+  if (selected.length > 0) {
+    emit('assignMultiple', selected)
+    selectedOperators.value = new Set()
   }
 }
 
@@ -117,6 +137,8 @@ const rarityColor = (rarity) => {
   const colors = { 6: '#ff6b6b', 5: '#feca57', 4: '#48dbfb', 3: '#1dd1a1', 2: '#a29bfe', 1: '#dfe6e9' }
   return colors[rarity] || '#dfe6e9'
 }
+
+const selectCount = computed(() => selectedOperators.value.size)
 </script>
 
 <template>
@@ -140,6 +162,24 @@ const rarityColor = (rarity) => {
             一键撤离
           </button>
           <button class="panel-close-btn cursor-pointer" @click="emit('close')">&times;</button>
+        </div>
+      </div>
+
+      <!-- Product Selector (for manufacturing/trade rooms) -->
+      <div v-if="hasProductSelector" class="product-selector">
+        <span class="product-selector-label">产物选择</span>
+        <div class="product-selector-options">
+          <button
+            v-for="p in currentProducts"
+            :key="p.value"
+            class="product-option"
+            :class="{ active: (room.product || currentProducts[0]?.value) === p.value }"
+            :style="{ '--accent': roomColor }"
+            @click="emit('updateProduct', p.value)"
+          >
+            <span class="product-option-icon">{{ p.icon }}</span>
+            <span class="product-option-label">{{ p.label }}</span>
+          </button>
         </div>
       </div>
 
@@ -197,10 +237,10 @@ const rarityColor = (rarity) => {
             :key="op.id"
             class="operator-card"
             :class="{
-              selected: selectedOperator?.id === op.id,
+              selected: selectedOperators.has(op.id),
               'skill-match': hasMatchingSkill(op)
             }"
-            @click="selectOperator(op)"
+            @click="toggleOperator(op)"
           >
             <div class="op-avatar">
               <span class="op-avatar-text">{{ op.name?.charAt(0) || '?' }}</span>
@@ -210,6 +250,7 @@ const rarityColor = (rarity) => {
               <div v-if="hasMatchingSkill(op)" class="skill-match-badge" :title="'适合' + roomTypeMap[props.room.type]">
                 ★
               </div>
+              <div v-if="selectedOperators.has(op.id)" class="op-check-badge">✓</div>
             </div>
             <div class="op-info">
               <div class="op-name-row">
@@ -236,11 +277,19 @@ const rarityColor = (rarity) => {
       <div class="panel-footer">
         <button
           class="assign-btn"
-          :class="{ active: selectedOperator }"
-          :disabled="!selectedOperator || props.room.operators.length >= maxOps"
+          :class="{ active: selectCount > 0 }"
+          :disabled="selectCount === 0 || props.room.operators.length >= maxOps"
           @click="confirmAssign"
         >
-          {{ !selectedOperator ? '请选择干员' : props.room.operators.length >= maxOps ? '已满员' : `进驻 ${selectedOperator.name}` }}
+          <template v-if="selectCount === 0">
+            请选择干员
+          </template>
+          <template v-else-if="props.room.operators.length >= maxOps">
+            已满员
+          </template>
+          <template v-else>
+            进驻所选 ({{ selectCount }})
+          </template>
         </button>
       </div>
     </div>
@@ -294,6 +343,67 @@ const rarityColor = (rarity) => {
 .panel-close-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   color: #d1d5db;
+}
+
+/* Product Selector */
+.product-selector {
+  padding: 10px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.product-selector-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.product-selector-options {
+  display: flex;
+  gap: 6px;
+}
+
+.product-option {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #9ca3af;
+  font-family: var(--font-mono);
+}
+
+.product-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #d1d5db;
+}
+
+.product-option.active {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: var(--accent, rgba(59, 130, 246, 0.3));
+  color: var(--accent, #60a5fa);
+}
+
+.product-option-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
+.product-option-label {
+  font-size: 10px;
+  font-weight: 500;
 }
 
 .current-operators {
@@ -446,6 +556,7 @@ const rarityColor = (rarity) => {
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
+  position: relative;
 }
 
 .operator-card:hover {
@@ -455,7 +566,7 @@ const rarityColor = (rarity) => {
 
 .operator-card.selected {
   background: rgba(59, 130, 246, 0.1);
-  border-color: rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.35);
 }
 
 .op-avatar {
@@ -490,6 +601,40 @@ const rarityColor = (rarity) => {
   font-weight: 700;
   font-family: var(--font-mono);
   color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.op-check-badge {
+  position: absolute;
+  bottom: -4px;
+  left: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #3b82f6;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 4px rgba(59, 130, 246, 0.5);
+}
+
+.skill-match-badge {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #facc15;
+  color: #1a1a1a;
+  font-size: 8px;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -594,37 +739,5 @@ const rarityColor = (rarity) => {
 
 .assign-btn.active:hover {
   background: rgba(59, 130, 246, 0.25);
-}
-
-.assign-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Skill match indicator */
-.operator-card.skill-match {
-  background: rgba(139, 92, 246, 0.08);
-  border-color: rgba(139, 92, 246, 0.25);
-}
-
-.operator-card.skill-match:hover {
-  background: rgba(139, 92, 246, 0.12);
-  border-color: rgba(139, 92, 246, 0.35);
-}
-
-.skill-match-badge {
-  position: absolute;
-  bottom: -4px;
-  left: -4px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #8b5cf6, #a78bfa);
-  color: white;
-  font-size: 9px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 </style>

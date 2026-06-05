@@ -28,14 +28,14 @@ const roomTypes = {
 }
 
 const leftWingRooms = reactive([
-  { id: 'left-0', type: 'trade', subtype: '贸易站 001', level: 3, operators: [], built: true, negotiationStrategy: '龙门商法' },
-  { id: 'left-1', type: 'manufacturing', subtype: '制造站 001', level: 3, operators: [], built: true },
+  { id: 'left-0', type: 'trade', subtype: '贸易站 001', level: 3, operators: [], built: true, product: '龙门币', negotiationStrategy: '龙门商法' },
+  { id: 'left-1', type: 'manufacturing', subtype: '制造站 001', level: 3, operators: [], built: true, product: '中级作战记录' },
   { id: 'left-2', type: 'power', subtype: '发电站 001', level: 3, operators: [], built: true },
-  { id: 'left-3', type: 'trade', subtype: '贸易站 002', level: 3, operators: [], built: true, negotiationStrategy: '龙门商法' },
-  { id: 'left-4', type: 'manufacturing', subtype: '制造站 002', level: 3, operators: [], built: true },
+  { id: 'left-3', type: 'trade', subtype: '贸易站 002', level: 3, operators: [], built: true, product: '龙门币', negotiationStrategy: '龙门商法' },
+  { id: 'left-4', type: 'manufacturing', subtype: '制造站 002', level: 3, operators: [], built: true, product: '中级作战记录' },
   { id: 'left-5', type: 'power', subtype: '发电站 002', level: 3, operators: [], built: true },
-  { id: 'left-6', type: 'trade', subtype: '贸易站 003', level: 3, operators: [], built: true, negotiationStrategy: '龙门商法' },
-  { id: 'left-7', type: 'manufacturing', subtype: '制造站 003', level: 3, operators: [], built: true },
+  { id: 'left-6', type: 'trade', subtype: '贸易站 003', level: 3, operators: [], built: true, product: '龙门币', negotiationStrategy: '龙门商法' },
+  { id: 'left-7', type: 'manufacturing', subtype: '制造站 003', level: 3, operators: [], built: true, product: '中级作战记录' },
   { id: 'left-8', type: 'power', subtype: '发电站 003', level: 3, operators: [], built: true },
 ])
 
@@ -189,6 +189,17 @@ const buildableTypes = [
   { type: 'power', label: '发电站', color: 'var(--color-power)', icon: '⚡' },
 ]
 
+const manufacturingProducts = [
+  { value: '中级作战记录', label: '作战记录', icon: '📜' },
+  { value: '赤金', label: '赤金', icon: '🪙' },
+  { value: '源石碎片', label: '源石碎片', icon: '💎' },
+]
+
+const tradeProducts = [
+  { value: '龙门币', label: '龙门币', icon: '💰' },
+  { value: '合成玉', label: '合成玉', icon: '💠' },
+]
+
 const handleRoomClick = (room) => {
   console.log('Room clicked:', room.id, room.subtype, 'type:', room.type)
   if (buildMode.value) {
@@ -227,6 +238,11 @@ const handleBuildSelect = (type) => {
   showBuildMenu.value.built = true
   showBuildMenu.value.level = 3
   showBuildMenu.value.operators = []
+  const productDefaults = {
+    trade: '龙门币',
+    manufacturing: '中级作战记录',
+  }
+  showBuildMenu.value.product = productDefaults[type] || null
   const typeNames = {
     trade: '贸易站',
     manufacturing: '制造站',
@@ -254,6 +270,11 @@ const changeRoomType = (room, newType) => {
   room.subtype = typeNames[newType] || newType
   room.level = 3
   room.operators = []
+  const productDefaults = {
+    trade: '龙门币',
+    manufacturing: '中级作战记录',
+  }
+  room.product = productDefaults[newType] || null
 }
 
 const changeRoomLevel = (room, newLevel) => {
@@ -269,12 +290,32 @@ const demolishRoom = (room) => {
   showEditMenu.value = null
 }
 
+const openOperatorsFromEdit = (room) => {
+  showEditMenu.value = null
+  selectedRoom.value = room
+  showOperatorPanel.value = true
+}
+
 const assignOperator = (operator) => {
   if (!selectedRoom.value) return
   const maxOps = roomTypes[selectedRoom.value.type]?.maxOps || 3
   if (selectedRoom.value.operators.length < maxOps) {
     selectedRoom.value.operators.push({ ...operator })
   }
+}
+
+const assignMultipleOperators = (operators) => {
+  if (!selectedRoom.value) return
+  const maxOps = roomTypes[selectedRoom.value.type]?.maxOps || 3
+  const available = maxOps - selectedRoom.value.operators.length
+  operators.slice(0, available).forEach(op => {
+    selectedRoom.value.operators.push({ ...op })
+  })
+}
+
+const updateProduct = (product) => {
+  if (!selectedRoom.value) return
+  selectedRoom.value.product = product
 }
 
 const removeOperator = (index) => {
@@ -460,9 +501,9 @@ const generateConfig = () => {
         }))
       }
       if (room.type === 'manufacturing') {
-        config[name]["产物"] = "作战记录"
+        config[name]["产物"] = room.product || "中级作战记录"
       } else if (room.type === 'trade') {
-        config[name]["产物"] = "龙门币"
+        config[name]["产物"] = room.product || "龙门币"
         config[name]["谈判策略"] = room.negotiationStrategy || "龙门商法"
       } else if (room.type === 'power') {
         config[name]["产物"] = "无人机"
@@ -686,6 +727,7 @@ const clearSelection = () => {
                     </span>
                   </div>
                   <div class="room-subtype">{{ room.subtype }}</div>
+                  <div v-if="room.product" class="room-product" :style="{ color: getColorVar(room.type) }">{{ room.product }}</div>
                   <div class="room-footer">
                     <span class="status-indicator" :class="`status-${room.type}`">
                       {{ getRoomStatus(room) }} <span class="status-arrows">▶▶▶</span>
@@ -720,6 +762,7 @@ const clearSelection = () => {
                     </span>
                   </div>
                   <div class="room-subtype">{{ room.subtype }}</div>
+                  <div v-if="room.product" class="room-product" :style="{ color: getColorVar(room.type) }">{{ room.product }}</div>
                   <div class="room-footer">
                     <span class="status-indicator" :class="`status-${room.type}`">
                       {{ getRoomStatus(room) }} <span class="status-arrows">▶▶▶</span>
@@ -754,6 +797,7 @@ const clearSelection = () => {
                     </span>
                   </div>
                   <div class="room-subtype">{{ room.subtype }}</div>
+                  <div v-if="room.product" class="room-product" :style="{ color: getColorVar(room.type) }">{{ room.product }}</div>
                   <div class="room-footer">
                     <span class="status-indicator" :class="`status-${room.type}`">
                       {{ getRoomStatus(room) }} <span class="status-arrows">▶▶▶</span>
@@ -861,6 +905,7 @@ const clearSelection = () => {
                     </span>
                   </div>
                   <div class="room-subtype">{{ room.subtype }}</div>
+                  <div v-if="room.product" class="room-product" :style="{ color: getColorVar(room.type) }">{{ room.product }}</div>
                   <div class="room-footer">
                     <span class="status-indicator" :class="`status-${room.type}`">
                       {{ getRoomStatus(room) }} <span class="status-arrows">▶▶▶</span>
@@ -1080,6 +1125,21 @@ const clearSelection = () => {
                 </button>
               </div>
             </div>
+            <div v-if="showEditMenu.type === 'manufacturing' || showEditMenu.type === 'trade'" class="edit-section">
+              <span class="edit-label">{{ showEditMenu.type === 'manufacturing' ? '制造产物' : '贸易产物' }}</span>
+              <div class="product-buttons">
+                <button
+                  v-for="p in (showEditMenu.type === 'manufacturing' ? manufacturingProducts : tradeProducts)"
+                  :key="p.value"
+                  class="product-btn"
+                  :class="{ active: showEditMenu.product === p.value }"
+                  @click="showEditMenu.product = p.value"
+                >
+                  <span class="product-btn-icon">{{ p.icon }}</span>
+                  <span>{{ p.label }}</span>
+                </button>
+              </div>
+            </div>
             <div class="edit-section">
               <span class="edit-label">房间等级</span>
               <div class="level-buttons">
@@ -1093,6 +1153,11 @@ const clearSelection = () => {
                   Lv.{{ lv }}
                 </button>
               </div>
+            </div>
+            <div class="edit-section">
+              <button class="operator-btn" @click="openOperatorsFromEdit(showEditMenu)">
+                <span class="op-icon-inline">i</span> 进驻管理
+              </button>
             </div>
             <div class="edit-section">
               <button class="demolish-btn" @click="demolishRoom(showEditMenu)">
@@ -1109,7 +1174,11 @@ const clearSelection = () => {
       <OperatorPanel
         v-if="showOperatorPanel && selectedRoom"
         :room="selectedRoom"
+        :manufacturing-products="manufacturingProducts"
+        :trade-products="tradeProducts"
         @assign="assignOperator"
+        @assign-multiple="assignMultipleOperators"
+        @update-product="updateProduct"
         @remove="removeOperator"
         @close="closeOperatorPanel"
       />
@@ -1449,6 +1518,14 @@ const clearSelection = () => {
   font-size: 9px;
   color: #6b7280;
   font-family: var(--font-mono);
+}
+
+.room-product {
+  font-size: 8px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  opacity: 0.85;
 }
 
 .room-footer {
@@ -1832,6 +1909,47 @@ const clearSelection = () => {
   color: #eab308;
 }
 
+.product-buttons {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.product-btn {
+  flex: 1;
+  min-width: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #9ca3af;
+  font-size: 10px;
+  font-family: var(--font-mono);
+}
+
+.product-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #d1d5db;
+}
+
+.product-btn.active {
+  background: rgba(75, 147, 168, 0.15);
+  border-color: rgba(75, 147, 168, 0.4);
+  color: var(--color-trade);
+}
+
+.product-btn-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+
 .demolish-btn {
   width: 100%;
   padding: 10px 14px;
@@ -1848,6 +1966,41 @@ const clearSelection = () => {
 .demolish-btn:hover {
   background: rgba(239, 68, 68, 0.2);
   border-color: rgba(239, 68, 68, 0.4);
+}
+
+.operator-btn {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 4px;
+  background: rgba(75, 147, 168, 0.1);
+  border: 1px solid rgba(75, 147, 168, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-trade);
+  font-size: 12px;
+  font-family: var(--font-mono);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.operator-btn:hover {
+  background: rgba(75, 147, 168, 0.2);
+  border-color: rgba(75, 147, 168, 0.4);
+}
+
+.op-icon-inline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: 9px;
+  font-weight: 700;
+  border: 1px solid var(--color-trade);
+  border-radius: 1px;
+  line-height: 1;
 }
 
 /* Overview Panel */

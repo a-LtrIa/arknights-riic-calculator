@@ -52,7 +52,11 @@ class 发电站效率计算器:
         for op in self.进驻干员:
             name = op["名称"]
             elite = op["精英等级"]
-            self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            try:
+                self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            except ValueError:
+                # 未知干员，跳过
+                pass
 
     def 计算效率(self) -> dict:
         """计算发电站效率"""
@@ -123,7 +127,11 @@ class 会客室效率计算器:
         for op in self.进驻干员:
             name = op["名称"]
             elite = op["精英等级"]
-            self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            try:
+                self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            except ValueError:
+                # 未知干员，跳过
+                pass
 
     def 计算效率(self) -> dict:
         """计算会客室效率"""
@@ -185,7 +193,11 @@ class 加工站效率计算器:
         for op in self.进驻干员:
             name = op["名称"]
             elite = op["精英等级"]
-            self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            try:
+                self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            except ValueError:
+                # 未知干员，跳过
+                pass
 
     def 计算效率(self) -> dict:
         """计算加工站效率"""
@@ -248,7 +260,11 @@ class 办公室效率计算器:
         for op in self.进驻干员:
             name = op["名称"]
             elite = op["精英等级"]
-            self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            try:
+                self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            except ValueError:
+                # 未知干员，跳过
+                pass
 
     def 计算效率(self) -> dict:
         """计算办公室效率"""
@@ -327,7 +343,11 @@ class 训练室效率计算器:
         for op in self.进驻干员:
             name = op["名称"]
             elite = op["精英等级"]
-            self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            try:
+                self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            except ValueError:
+                # 未知干员，跳过
+                pass
 
     def 计算效率(self) -> dict:
         """计算训练室效率"""
@@ -474,7 +494,11 @@ class 控制中枢效率计算器:
         for op in self.进驻干员:
             name = op["名称"]
             elite = op["精英等级"]
-            self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            try:
+                self.干员实例列表.append(创建干员实例(name, elite, self.特殊变量))
+            except ValueError:
+                # 未知干员，跳过
+                pass
 
     def 计算效率(self) -> dict:
         """计算控制中枢效率"""
@@ -535,7 +559,11 @@ class 活动室效率计算器:
         if self.使用干员:
             name = self.使用干员["名称"]
             elite = self.使用干员["精英等级"]
-            self.干员实例 = 创建干员实例(name, elite, self.特殊变量)
+            try:
+                self.干员实例 = 创建干员实例(name, elite, self.特殊变量)
+            except ValueError:
+                # 未知干员，跳过
+                pass
 
     def 计算效率(self) -> dict:
         """计算活动室效率"""
